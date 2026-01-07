@@ -13,7 +13,7 @@ public class Project {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private Users User;
+    private Users user;
 
     private String description, topic1, topic2, topic3, topic4, topic5;
     private LocalDate targetDate, creationDate, lastUpdateDate;
@@ -24,11 +24,11 @@ public class Project {
     }
 
     public void setUser(Users user) {
-        User = user;
+        user = user;
     }
 
     public Users getUser() {
-        return User;
+        return user;
     }
 
     public String getTitle() {
