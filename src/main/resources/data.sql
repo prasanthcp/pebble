@@ -1,0 +1,182 @@
+
+insert into USERS (USERNAME, ENCRYPTED_PASSWORD, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES ('Prasanth','Welcome1', CURRENT_DATE, CURRENT_DATE, 1);
+
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Learn Java',
+ 'Learn Java coding and programming in next six months',
+ 1,
+ 'Solve DSA',
+ 'Read Core Java',
+ 'Hands-on Projects',
+ 'Spring Basics',
+ 'Java Streams',
+ CURRENT_DATE + 180,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Master Spring Boot',
+ 'Build production-ready Spring Boot applications',
+ 1,
+ 'Spring Core',
+ 'Spring Boot',
+ 'JPA & Hibernate',
+ 'REST APIs',
+ 'Security',
+ CURRENT_DATE + 120,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('DSA Intensive',
+ 'Strengthen problem solving with DSA',
+ 1,
+ 'Arrays',
+ 'Linked List',
+ 'Trees',
+ 'Graphs',
+ 'DP',
+ CURRENT_DATE + 90,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('System Design',
+ 'Prepare for system design interviews',
+ 1,
+ 'Scalability',
+ 'Load Balancing',
+ 'Caching',
+ 'Databases',
+ 'Messaging',
+ CURRENT_DATE + 150,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Microservices',
+ 'Learn microservices architecture',
+ 1,
+ 'Spring Cloud',
+ 'Eureka',
+ 'Feign',
+ 'Gateway',
+ 'Resilience4j',
+ CURRENT_DATE + 140,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Java Concurrency',
+ 'Deep dive into multithreading and concurrency',
+ 1,
+ 'Threads',
+ 'Executors',
+ 'CompletableFuture',
+ 'Locks',
+ 'Virtual Threads',
+ CURRENT_DATE + 100,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Database Mastery',
+ 'Become strong in SQL and databases',
+ 1,
+ 'SQL',
+ 'Indexes',
+ 'Transactions',
+ 'Joins',
+ 'Performance Tuning',
+ CURRENT_DATE + 110,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Cloud Basics',
+ 'Learn cloud fundamentals with OCI',
+ 1,
+ 'OCI Compute',
+ 'Networking',
+ 'Storage',
+ 'IAM',
+ 'Monitoring',
+ CURRENT_DATE + 130,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('React Fundamentals',
+ 'Learn React for full stack development',
+ 1,
+ 'JSX',
+ 'Hooks',
+ 'State Management',
+ 'Routing',
+ 'API Integration',
+ CURRENT_DATE + 80,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO project
+(TITLE, DESCRIPTION, USER_ID, TOPIC1, TOPIC2, TOPIC3, TOPIC4, TOPIC5,
+ TARGET_DATE, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES
+('Pebble App',
+ 'Build Pebble study management tool',
+ 1,
+ 'Spring Boot',
+ 'React',
+ 'JWT Security',
+ 'OCI Deployment',
+ 'PostgreSQL',
+ CURRENT_DATE + 200,
+ CURRENT_DATE,
+ CURRENT_DATE,
+ 1);
+
+INSERT INTO pebble
+(PROJECT_ID, USER_ID, NOTES, STATE, TOPIC1_STUDIED, TOPIC2_STUDIED,TOPIC3_STUDIED,TOPIC4_STUDIED,TOPIC5_STUDIED, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES (1, 1,'concurrency day 1', 'RUNNING', 0.01,0,0,0,0, CURRENT_DATE, CURRENT_DATE, 1);
+
+INSERT INTO pebble
+(PROJECT_ID, USER_ID, NOTES, STATE, TOPIC1_STUDIED, TOPIC2_STUDIED,TOPIC3_STUDIED,TOPIC4_STUDIED,TOPIC5_STUDIED, CREATION_DATE, LAST_UPDATE_DATE, OBJECT_VERSION)
+VALUES (1, 1,'concurrency day 2', 'COMPLETED', 0.01,0,0,0,0, CURRENT_DATE, CURRENT_DATE, 1);
