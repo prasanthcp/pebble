@@ -7,7 +7,7 @@ public class Users {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     private String encryptedPassword;
     private String creationDate;

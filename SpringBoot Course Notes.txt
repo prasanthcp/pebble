@@ -1,0 +1,595 @@
+======================================
+
+----------------------
+Section 20:
+----------------------
+
+👉 https://github.com/in28minutes/master-spring-and-spring-boot/tree/main/13-full-stack
+
+👉 Step by Step changes are detailed here: https://github.com/in28minutes/master-spring-and-spring-boot/blob/main/13-full-stack/step-by-step-changes/step-by-step-changes-full-stack.md
+
+1) Steps to build Full Stack Application:
+- Modern Javascript
+- React Fundamentals - Components, State, Routing, Rest API, Auth
+- Counter Application
+- Todo Application
+
+2) Javascript: is an implementation of the standard EcmaScript.
+- Install node js [Server side] for JS
+- npm is Package Manager for JS, just like Maven
+    - It helps to download dependencies at node_modules (temp folder)
+    - create a new project using init and install dep
+- npx is package executor: execute JS package directly without installing
+- Useful commmands:
+    npm --version
+    node --version
+    npm init
+    npm install jquery 
+
+3) What is React ?
+- One of the most popular JS libraries to build SPA
+- Open Source project built by Facebook
+- Component-based used to build web, native applications
+- Recommended way to create new app -> create react app;
+    cd <Front-end-folder>
+    npx create-react-app todo-app
+    cd todo-app
+    npm start
+- Troubleshooting Tips:
+    sudo npx create-react-app todo-app
+    npm uninstall -g create-react-app
+    npx clear-npx-cache 
+- VS Shortcuts:
+    Cmd+B to toggle Menu
+    Cmd+P to open search
+- Any code changes in react App > npm builds n runs the app 
+- Structure: npm_modules, package.json; 
+    - React Initialization needs, 
+    - public/index.html contains root div
+    - src/index.css styles entire app
+    - src/App.js code for App component
+    - src/App.css styles App component
+    - src/App.test.js test files for App
+- Why use React ? It modularizes web application code using reusable Components
+- Parts Of Component -> jsx (view), js (logic), css (style), state (internal data store), props (pass data)
+- Function Components (must return jsx )
+- Class Components (must have render method that returns jsx + class extends component)
+- Each file in js is called a Module
+- React 16.8 introduced hooks that supports state for function components
+- State: built in react object used to store data
+- Q) When to use () {} ?
+    - jsx presentation = javascript XML 
+    - stricter than HTML. Close paranthesis is compulsory
+    - only one top tag is allowed. You can wrap everything inside <></>
+    - return should have ()
+    - Name of Component must start with capital letter
+    - All html must be in lowercase; Instead of class, use className in html tags
+- Babel can convert latest JSX into JS understandable by even older browsers
+- React Best Practices: Each component in its own module
+- import {component} -> to import a non-default component
+- JavaScript, - don't need ; at end. Can create dynamic objects without classes. Functions are objects
+- useState hook allows adding State to component. It returns, current state + function to update state
+- Each instance of a component has its own state
+- How to share state between components ?
+- What happens in React Background ? 
+    - When we update a variable tied to a div, the page renders the change automatically
+    - HTML Structure is called DOM [Document Object Model]
+    - Earlier: JS code has to locate the element in DOM and update it
+    - React creates Virtual DOM hierarchy and stores in memory. 
+    - When variable is updated > Virtual dom is updated v1 to v2 
+    - > React compares v1 vs v2 > update HTML page 
+- What are Props ?
+    - We can pass Properties (Props) object to a React component
+    - Props are used for things that are constant during a lifetime of a component
+    - Pass {1} to pass number
+    - .propTypes .defaultProps can be set to the component in jsx
+    - How to have one state for multiple components ?
+    - How can we can two functions in a button click ? Or How to call parent function in child ?
+        - Pass parent function to child as prop - call it inside child components function
+        - Instead of passing the state of parent to child, create a new state in parent and use it
+- Chrome Extension - React Tool helps in inspecting the props, components hierarchy etc
+
+
+----------------------
+Section 21:
+----------------------
+- Things covered are routing, form implementation, validations, call REST APIs, Authentication
+
+- Creating Login Component
+    - We can only modify values of the Controlled Components. How to make login form a controlled ?
+    - Error: You provided a `value` prop to a form field without an `onChange` handler. This will render a read-only field. If the field should be mutable use `defaultValue`. Otherwise, set either `onChange` or `readOnly`.
+    - 
+
+- For Styling,
+    - npm install bootstrap
+    - import 'bootstrap/dist/css/bootstrap.min.css' in index.js
+- How to share state across different components ?
+    - Create context and share across multiple components via AuthProvider
+    - createContext() > pass state to its provider > usecontext in "children" components !
+- Routing: 
+    import {BrowserRouter, Routes,Route} from "react-router-dom";
+    import {useNavigate} from "react-router-dom";
+- Calling REST APIs: npm install axios; In JAVA > add WebMVCConfigurer mapping to allow CORS requests.
+- Authentication:
+
+
+
+
+
+
+
+======================================
+1: @SpringBootApplication = @Configuration + @ComponentScan + @EnableAutoConfiguration
+
+2: Spring starts > Reads @Configuration Class > Finds, invokes all Beans >
+    - registers returned objects as beans > Same instance is fetched everytime
+    - Why does spring call all beans before-hand ? isn't it overhead ?
+        - Fail fast (BIGGEST reason): Startup failure is cheaper than runtime failure.
+        - long-running stability >> startup time
+        - logically Spring should have all instances ready before using them in main()
+        - @lazy can avoid calling a bean during startup
+        - For Global lazy use spring.main.lazy-initialization=true
+3: Spring needs @Primary to pick one out of multiple beans of same class type
+    - @Autowired to pick primary, @Autowired+@Qualifier to pick a specific bean
+
+Here's the code backup at the end of step 04: https://github.com/in28minutes/master-spring-and-spring-boot/blob/main/01-spring/02-Step04.md
+
+4: Manual object creation is handled by Spring
+
+----------------------
+Section 8:
+----------------------
+
+5: Why Lot of dependencies ?
+    - Multiple layers (Web,Business,Data) communications - create dependencies
+    - Let Spring create & manage objects - Let us focus on Business Logic
+
+- Exercise:
+Create classes and interfaces as needed
+Use constructor injection to inject dependencies
+Make MongoDbDataService as primary
+Create a Spring Context
+    Prefer annotations
+    Retrieve BusinessCalculationService bean and run findMax method
+
+Lazy Initialization
+Bean Scope
+PostConstruct & PreDestroy
+Jakarta EE
+Context & Dependency Injection
+XML Configuration
+@Component
+Spring Big Picture, Modules
+Why Spring ?
+
+Here's the code backup at the end of step 03: https://github.com/in28minutes/master-spring-and-spring-boot/blob/main/01-spring/03-Step03.md
+
+----------------------
+Section 9:
+----------------------
+
+@Lazy can be used at @Component/@Bean
+Lazy-resolution proxy will be injected instead of actual dependency
+Can be used on Configuration (@Configuration) class: All @Bean methods within the @Configuration will be lazily initialized
+
+Spring Bean Scopes:
+    - Singleton (one instance per Application Context) - Best for Stateless Beans
+    - Prototype (multiple instances per container) - Best for Stateful beans
+    - Java Singleton is one object instance per JVM (~ (Book: Gang Of Four Design Pattern)
+    - Spring Singleton is one object instance per Spring IoC Container
+    - @Scope(value=ConfigurableBeanFactory.SCOPE_SINGLETON)
+    - Other scopes (Web aware Application Context)
+        - request [1 per http request]
+        - session [1 per user's login period]
+        - application [1 per web application runtime]
+        - websocket [1 per websocket instance]
+
+@PostConstruct, @PreDestroy are used to initialize beans and clean up
+
+
+
+
+Evolution of J2EE or Java EE or Jakarta EE
+
+- Earlier enterprise capabilities were directly built into JDK
+- Later its separated under J2EE or Java 2 Platform Enterprise Edition
+- J2EE -> Java EE -> Jakarta EE
+- Java Server Pages -> Jakarta Server Pages (JSP)
+
+Jakarta Specifications supported by Spring 6, Spring Boot 3:
+- JSTL = Jakarta Standard Tag Libraries
+- EJB = Jakarta Enterprise Beans
+- JAX-RS = Jakarta RESTful Web Services Specification
+- Jakarta Bean Validations
+- Jakarta CDI = Context and Dependency Injection
+- JPA = Jakarta Persistence API = interact with Relational DB
+
+Jakarta CDI:
+- CDI is a specification or Interface [with no implementation]
+- Spring Framework implements CDI 
+- Important Annotations: 
+    - Named (~Component), Qualifier, Inject (~Autowired), Scope, Singleton
+
+XML Configuration:
+- Back then, Java Configuration was done using XML Configuration i.e., ContextConfiguration.xml
+- AnnotationConfigApplicationContext() to launch java config
+- ClassPathXmlApplicationContext()n to launch xml config
+- Define bean's in XML file. Bean definitions never tolerate mistakes — they require the exact fully-qualified class name, or Spring will fail immediately.
+- Debugging is relatively easier than spring annotations.
+
+Spring Stereotype Annotations: @Component has specializations
+@Service indicates annotated class has business logic
+@Controller indicates a web controller in web application or REST API
+@Repository indicates a class interacting with DB
+- precise usage helps AOP
+
+Spring Ecosystem:
+a) Framework: is composed of various modules. Core Module includes IoC, Dependency Injection, Auto-wiring - Helps in loose coupling, reduce boilerplate code, Modularized
+b) Modules: Spring MVC, Spring WebFlux, Spring JDBC, Spring JMS, Spring Test
+c) Projects: Spring Security, Spring Data, Spring Integration, Spring Boot, Spring Cloud
+
+-----------
+Section 10: Learning Maven with Spring
+-----------
+
+👉 Bookmark the GitHub folder for this section
+https://github.com/in28minutes/master-spring-and-spring-boot/tree/main/81-maven
+
+What is Maven ? Maven can help in all our daily activities ->
+Create projects,
+manage dependencies,
+build JAR file,
+Run application locally in Tomcat,
+Run unit tests
+Deploy to a test environment
+
+- Our project's artifact id is something some other project can use for reference.
+- POM.xml -> Project Object Model contains
+a) Maven Dependencies (i.e., frameworks/libraries used in our project); addition of new will make maven downloads all transitive dependent jars for us. Spring Dependencies are at specific class & at class level. Maven Dependencies are at project level, needed to build project.
+b) Parent in our POM is "spring-boot-starter-parent" and this has a transitive dependent "spring-boot-dependencies" which helps in dependency management. Default versions of dependencies are mentioned in effective POM.
+c) name of project; groupId similar to package; artifactId similar to class;
+
+How does Maven work ?
+- Maven uses convention over configuration: i.e., predefined folder structure
+- Maven Central Repository is place from where jars are downloaded.
+- The jars which are downloaded by Maven are stored in a temporary local location which is called local Maven repository.
+
+Maven Commands:
+mvn --version
+mvn compile // compiles source files
+mvn test-compile // compiles source & test files
+mvn clean // delete target directory
+mvn test // compiles all files > runs all unit tests
+mvn package // create a jar
+mvn help:effective-pom
+mvn dependency:tree
+
+Spring Versioning Scheme: MAJOR.MINOR.PATCH[-MODIFIER]
+- The modifier indicates whether it's a released version/milestone/release candidate/snapshot.
+
+-----------
+Section 11: Getting started with Spring Boot
+-----------
+👉 Bookmark the GitHub folder for this section
+https://github.com/in28minutes/master-spring-and-spring-boot/tree/main/02-springboot
+
+- Applications can be built without spring boot as well
+- Magic of Spring Boot:Spring initializer,Starter Project, Auto Configuration, Developer tools,Actuator
+
+Overview of Spring Boot: Introduction to Spring Boot and its significance in Java development.
+
+Starter Projects: Explanation of Spring Boot starter projects that simplify dependency management and initial configuration for new applications.
+
+Auto-Configuration: Discussion on how Spring Boot auto-configures your application based on the included libraries, streamlining the development process.
+
+Actuator: Introduction to the Actuator module, which provides production-ready features such as health checks and metrics to monitor the application.
+
+DevTools: Overview of Spring Boot DevTools, which enhance the development experience by enabling automatic restarts and live reloads.
+
+Advantages of Spring Boot: Emphasis on quick development with ready-to-use features, making it ideal for building robust applications.
+
+Future Applications: Confidence that the concepts learned in this section will aid in building more advanced features in the project moving forward.
+
+@SpringBootApplication = @Configuration, @EnableAutoConfiguration, @ComponentScan
+SpringApplication.run(className.class);
+
+@RestController
+@RequestMapping("/api")
+public class ApiController {
+
+    @GetMapping("/hello)
+    public String hello() {
+        return "Hello Spring";
+    }
+}
+
+Application Properties
+server.port=8080
+sporing.datasource.url=jdbc:mysql://localhost:3306/mydb
+spring.datasource.username=user
+spring.datasource.password=pass 
+
+POM.xml
+-> spring-boot-starter-web; spring-boot-starter-actuator; spring-boot-devtools; spring-boot-starter-webmvc-test; 
+-> Add above dependencies and re-load Maven imports
+
+
+-----------
+Section 12: Getting started with JPA
+-----------
+
+https://github.com/in28minutes/master-spring-and-spring-boot/tree/main/03-jpa-getting-started
+
+
+Step1: 
+
+- Create Course table in scheme.sql [include spring-boot-h2console, h2 dependencies > enable in properties: spring.h2.console.enabled=true]
+
+- Use Spring JDBC:
+    - JDBC is lot of java and lot of sql code
+    - Spring JDBC is lot of sql, less java code
+    - Scheme.sql qeuries will be executed at the start of application
+    - To execute queries in java > implement CommandLineRunner > 
+- Use JPA & Hibernate
+- Use Spring Data JPA
+ 
+@GetMapping is just a shortcut for @RequestMapping(method = GET).
+
+3 Important Changes
+Change 01: Use jakarta.servlet.jsp.jstl instead of glassfish-jstl
+Change 02: Use jakarta.tags.core instead of http://java.sun.com/jsp/jstl/core as taglib
+Change 03: Run mvn clean install to update libraries
+
+https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api/3.0.2
+
+Hands On Findings,
+- The modelAttribute attribute only works with Spring’s <form:form> tag, not plain HTML <form>
+    - <input> is plain HTML, it ignores path and modelAttribute. 
+    - form:input and path has to be used to bind individual fields. 
+- Auto Refresh for a JSP change happens only on Eclipse
+- CSS & JSTL imports has to be included in all the JSPs
+- For a two way binding, use modelAttribute in the form 
+    - or You can use AJAX + JS to update fields dynamically
+    - Avoid manually setting value="${...}"
+- For a post call in the form, use method="POST" and action="<navigation path>"
+    - if we have two buttons (save,cancel) in form, how to decide action ? 
+        - add (name="action" value="delete") seperately to buttons
+    - cancel works fine, but since its a redirect, the post call on add-todo or update-todo are happening after that the redirect is happening. 
+        - Redirect does not prevent execution. It only prevents re-submission on refresh.
+        - For secondary actions like cancel use onclick="window.location='/todos'" instead of redirect, to avoid POST calls.
+- strict-origin-when-cross-origin: There was an unexpected error (type=Bad Request, status=400).
+    - CORS (Cross-Origin Resource Sharing) is a browser-enforced policy.
+    - It prevents scripts on one origin (domain/port) from calling another origin unless the server allows it.
+- Pebble Project Details:
+    - /todos → List of all todos
+    - /todo → Single todo form for create or update
+    - mappings for crud are add-todo, update-todo, delete-todo
+- Validations steps: Avoid Client side validations 
+    1) Add Spring Boot Stvarter Validation
+    2) Command Bean (Form Backing Object) -> Why Spring creates a NEW form backing object ? HTTP is stateless
+    3) Add Validations to Bean (@Size) + @Valid at the binding object
+    4) Display Validation Errors in the View
+
+- Html Comment: <!-- -->
+
+- why should we keep id in form and hide it ? > to avoid this unknown null failure ?
+    - Because HTTP is stateless. On submit, the server receives only what the browser sends back.
+    -> Hackeres can edit hidden fields
+    -> Solution: Verify session user details
+
+- Standard date format can be set at application level - spring.mvc.format.date = yyyy-MM-dd
+- bootstrap date picker 
+
+- configured SpringSecurityConfiguration still security doesnt seem to work ?  
+    - Ranga’s code worked because his Spring version auto-enabled security; your newer version requires explicit SecurityFilterChain.
+
+- Stream.ofList() is a immutable readonly List. So use collect(Collectors.toList()), not toList().
+
+H2 Inmemory Database:
+- 403 Error while trying to connect to h2console Inmemory Database ? 
+    - Because H2console uses frames thats disabled by spring security
+    - Default Spring security performs below items
+        - All URLs are protected i.e., redirected to login page
+        - CSRF Disable
+        - Frames is disabled
+- @Entity respective tables are automatically created by h2 DB for us.
+- Columns targetDate is created as target_date
+- By default data.sql is executed before the entity tables are created, so use set property datasource-initialization=true
+- No default constructor 
+- JPA helps in performing below items:
+    - Initializes spring entities, launches scripts at startup
+    - Creates DB and establishes connection { Application > Spring Data JPA > JPA > Database }
+    - Note: H2 is in memory database, it doesnt persists the data.
+
+Docker:
+// Initialize the Podman VM
+podman machine init 
+podman machine start
+
+podman version
+
+alias docker=podman
+
+docker pull mysql:8.0
+
+docker run -d 
+
+// verify container 
+docker ps 
+docker logs mysql-container
+
+
+----------------
+
+Difference between Controller and Rest Controller ?
+Static import ?
+Junits ?
+
+Scrum ? Agile Methodologies ?
+Solid Principles ?
+Sonar Cube ?
+
+Debug Notes:
+1) Code Changes aren't getting reflected > Check Cache or Try Incognito?
+2) Syntax Errors > Check the Spring Documentation first > https://docs.spring.io
+3) Discord channels are explored ?
+
+Building your first microservice Project [youtube.com/watch?v=Jl9OKQ92SJU&t=45924s]
+
+1) Add new dependencies - OpenFeign [Spring Cloud Routing], Eureka Discovery Client [Spring Cloud Discovery]
+2) Create new APIs for other microservices to communicate
+3) Each service runs at different port  [Add VM Config -Dserver.port=8082]
+4) if i have to create a new psql db ? while running the existing one ?
+    - You do NOT need a new container to create a new DB. You can create multiple databases inside the same running PostgreSQL container.
+    - podman exec -it postgres-db psql -U postgres
+    - create database myquizdb; -- at 5433
+    - \c db_name -- switch to a different db
+    - \dt -- list of tables
+    - 
+5) How do services discover and communicate ?
+    - RestTemplate // call generate url - RestTemplate url: localhost:8080/question/generate
+    - we don't know the ipaddress or port ? Using Feign Client, microservices can call each other using service names. All services register with Eureka Server, which enables dynamic discovery and load balancing without hardcoded URLs
+    - Eureka Info:
+        - application.properties:
+            spring.application.name=service-registry 
+            server.port=8761 
+            eureka.instance.hostname=localhost
+            eureka.client.fetch-registry=false
+            eureka.client.register-with-eureka=false
+        - eureka.instance.hostname=localhost since i mentioned this, eurekaclient instances at localhost will get registered ?
+    - Feign Client: Declarative REST client
+        - It will help us connect to a service without using RestTemplate
+    - API Gateway helps 
+        - we dont want user to login for each service call
+        - 
+Quiz - createQuiz get getScore
+
+
+
+
+
+
+
+Project Plan
+------------
+**Title:** Pebble
+**Description:** Study Management Tool
+
+**Tech Stack**
+------------------
+Back-End: Spring Boot 3+, Java; 
+Front-End: React Javascript;
+Database: PostgreSql;
+Deployment: OCI, Docker;
+
+**Sequence of execution:**
+---------------
+[ Note: Everyday Push the changes to GIT ]
+1) List out main Features
+2) Create a Database Table Schema
+3) Identifying pages and endpoints
+4) Revisit above points
+5) How to display data on the UI ?
+
+**Main Features,**
+-----------------
+1) User logs in
+2) Dashboard Page
+   - shows the list of existing projects
+   - option to add a new project
+   - option to select an existing project
+3) Project Page
+   - list of recent pebbles in last_update_date descending
+   - Add today's pebble (only if no pebble created today)
+   - Select today's pebble (if exists)
+4) Pebbles Page
+   - List of recent pebbles
+   - Select a Topic [Required] and Description [Optional]
+   - User starts the stopwatch 
+   - Stopwatch alerts a beep every {0.5 hour}
+   - Studies for 1 hour and stops stopwatch 
+     - if forgot to stop it or closed app abruptly [pause it with description]
+   - Show the summary of today's pebble
+
+**Optional Ideas:**
+- Settings Page: Make few things configurable,
+    - {Alert time}
+    - Stopwatch Themes
+    - Dark & Light Theme
+- Streak Appreciation when one topic is studied for 3 continuous days
+- loading gif ?
+- If loading takes time, show quotes
+- Preview pebble in different modes [list or table]
+- Closing tab abruptly should ask the user's confirmation ?
+- Note down Prod best practices like Enable logging, metrics etc 
+
+**Database Schema**
+-------------------
+Table 1: Project
+Columns: id (primary key), userid (foreign key), title, description, topic1, topic2, 
+topic3, topic4, topic5, target_date, creation_date, last_update_date, object_version
+
+Table 2: Pebble
+Columns: id (primary key), project_id (foreign key), userid (foreign key), note, 
+topic1, topic2, topic3, topic4, topic5, state, creation_date, last_update_date
+
+Table 3: Users
+Columns: userid (primary key), username, encrypted_password, creation_date, last_update_date 
+
+**End Points**
+---------------
+
+Method: POST
+URL: localhost:5000/addProject
+Payload: {
+    "title": "Learn Java",
+    "description": "I want to learn coding and programming in java in next 6months",
+    "topics": [
+        "topic1": "Core Java",
+        "topic2": "Solve DSA Problems",
+        "topic3": "Spring Framework 1",
+        "topic4": "Practice Hands On Lab"
+    ],
+    "targetDate": "01-07-2026"
+}
+
+Method: GET
+URL: localhost:5000/project/1
+Content-Type: application/json
+Response: {
+    "title": "Learn Java",
+    "description": "I want to learn coding and programming in java in next 6months",
+    "topics": [
+        "topic1": "Core Java",
+        "topic2": "Solve DSA Problems",
+        "topic3": "Spring Framework 1",
+        "topic4": "Practice Hands On Lab"
+    ],
+    "targetDate": "01-07-2026"
+}
+
+Method: POST
+URL: localhost:5000/addPebble
+Payload: {
+    "Topic": "Solve DSA Problems"
+    "note": "Leet code coding problem 324",
+    "state": "running"
+}
+
+Method: GET
+URL: localhost:5000/pebbles
+
+Method: GET
+URL: localhost:5000/pebble/1
+
+Study Logs:
+=> 6th January 2026: => 2hrs
+- Documented the project plan and basic features
+- Decide the simple tech stack to get started
+- Draft basic table schema
+- commit your first version by the EOD
+- Security ?
+
+Pebble project learnings:
+-  curl -u Prasanth:Welcome1 http://localhost:5001/getUser/Prasanth
+- check cors 

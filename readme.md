@@ -50,6 +50,8 @@ Deployment: OCI, Docker;
 - Preview pebble in different modes [list or table]
 - Closing tab abruptly should ask the user's confirmation ?
 - Note down Prod best practices like Enable logging, metrics etc 
+- Deep Study Music ex: youtu.be/p_heym7pmEk
+- Help in Handling Overwhelming Study phase ?
 
 **Database Schema**
 -------------------
@@ -112,8 +114,17 @@ URL: localhost:5000/pebble/1
 
 Study Logs:
 => 6th January 2026: => 2hrs
-- Documented the project plan and basic features
-- Decide the simple tech stack to get started
-- Draft basic table schema
-- commit your first version by the EOD
+d- Documented the project plan and basic features
+d- Decide the simple tech stack to get started
+d- Draft basic table schema
+d- commit your first version by the EOD
 - Security ?
+
+=> 7th January 2026: => 2hrs
+- Prepare basic React UI 
+- Deploy existing simple project in cloud
+- Components needed: 
+    - Login, Logout, Authentication, 
+    - ProjectDashboard, AddProject
+    - PebbleDashboard, AddPebble
+    - Profile

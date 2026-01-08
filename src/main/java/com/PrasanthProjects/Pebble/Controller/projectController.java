@@ -5,7 +5,6 @@ import com.PrasanthProjects.Pebble.Repository.ProjectJpaRepository;
 import com.PrasanthProjects.Pebble.Repository.UsersJpaRepository;
 import com.PrasanthProjects.Pebble.Service.Project;
 import com.PrasanthProjects.Pebble.Service.Users;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,24 +17,26 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("project")
-public class projectController {
+public class ProjectController {
 
     private ProjectJpaRepository projectJPARepository;
     private UsersJpaRepository userJPARepository;
     private PebbleJpaRepository pebbleJPARepository;
 
-    public projectController(ProjectJpaRepository projectJPARepository, UsersJpaRepository userJPARepository, PebbleJpaRepository pebbleJPARepository) {
+    public ProjectController(ProjectJpaRepository projectJPARepository, UsersJpaRepository userJPARepository, PebbleJpaRepository pebbleJPARepository) {
         this.projectJPARepository = projectJPARepository;
         this.userJPARepository = userJPARepository;
         this.pebbleJPARepository = pebbleJPARepository;
     }
 
-    @GetMapping("/getAll")
-    public ResponseEntity<ArrayList<Project>> goToProjectDashboard(ModelMap modelMap) throws Exception {
-        modelMap.put("username",getAuthenticatedUser().getUsername());
-        String username = (String)modelMap.getAttribute("username");
-        ArrayList<Project> projects = projectJPARepository.findByUserUserId(getAuthenticatedUser().getUserId());
-        return new ResponseEntity(projects, HttpStatus.OK);
+    @GetMapping("/getAll/{userId}")
+    public ResponseEntity<ArrayList<Project>> goToProjectDashboard(ModelMap modelMap, @PathVariable int userId) throws Exception {
+        // modelMap.put("username",getAuthenticatedUser().getUsername()); String username = (String)modelMap.getAttribute("username"); int userId1 = getAuthenticatedUser().getUserId();
+        ArrayList<Project> projects = projectJPARepository.findByUserUserId(userId);
+        if(projects.isEmpty())
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity(projects, HttpStatus.OK);
     }
 
     @GetMapping("/get/{project_id}")
