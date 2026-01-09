@@ -7,7 +7,7 @@ Project Plan
 ------------------
 Back-End: Spring Boot 3+, Java; 
 Front-End: React Javascript;
-Database: PostgreSql;
+Database: MySql;
 Deployment: OCI, Docker;
 
 **Sequence of execution:**
@@ -22,36 +22,20 @@ Deployment: OCI, Docker;
 **Main Features,**
 -----------------
 1) User logs in
-2) Dashboard Page
-   - shows the list of existing projects
-   - option to add a new project
-   - option to select an existing project
+2) Project's Dashboard Page
+   - shows the list of selectable existing projects (if any)
+   - option to Add a new project
 3) Project Page
-   - list of recent pebbles in last_update_date descending
-   - Add today's pebble (only if no pebble created today)
-   - Select today's pebble (if exists)
-4) Pebbles Page
-   - List of recent pebbles
-   - Select a Topic [Required] and Description [Optional]
-   - User starts the stopwatch 
-   - Stopwatch alerts a beep every {0.5 hour}
-   - Studies for 1 hour and stops stopwatch 
+   - Add Project > Fill Project form > Save > Shows Project details + Add Pebbles Option
+   - Existing Project > Shows Project details + List of Existing Pebbles (decs table form) + Add Pebble option
+4) Pebble Page
+   - Select a Topic [Required] and Description [Optional] and time studied > save > show readonly details of that pebble
+   - Better option: 
+     - User enters target study time > saves pebble > it shows readonly details & a stopwatch to track study slot 
+     - Stopwatch alerts a beep every {0.5 hour}
+     - Studies for 1 hour and stops stopwatch 
      - if forgot to stop it or closed app abruptly [pause it with description]
-   - Show the summary of today's pebble
-
-**Optional Ideas:**
-- Settings Page: Make few things configurable,
-    - {Alert time}
-    - Stopwatch Themes
-    - Dark & Light Theme
-- Streak Appreciation when one topic is studied for 3 continuous days
-- loading gif ?
-- If loading takes time, show quotes
-- Preview pebble in different modes [list or table]
-- Closing tab abruptly should ask the user's confirmation ?
-- Note down Prod best practices like Enable logging, metrics etc 
-- Deep Study Music ex: youtu.be/p_heym7pmEk
-- Help in Handling Overwhelming Study phase ?
+     - Update the status of pebble and studied time
 
 **Database Schema**
 -------------------
@@ -66,65 +50,93 @@ topic1, topic2, topic3, topic4, topic5, state, creation_date, last_update_date
 Table 3: Users
 Columns: userid (primary key), username, encrypted_password, creation_date, last_update_date 
 
-**End Points**
+**End Points Description**
 ---------------
 
-Method: POST
-URL: localhost:5000/addProject
-Payload: {
-    "title": "Learn Java",
-    "description": "I want to learn coding and programming in java in next 6months",
-    "topics": [
-        "topic1": "Core Java",
-        "topic2": "Solve DSA Problems",
-        "topic3": "Spring Framework 1",
-        "topic4": "Practice Hands On Lab"
-    ],
-    "targetDate": "01-07-2026"
+For Feature 1,
+1) Authenticate:- Post: /authenticate  Request Payload: {username, password} | Response Payload: {JWT, user details }
+2) Get User Details:- Get: /getUser/{username} Payload: JWT Token
+3) Logout:- Post URL: /logout | to timeout JWT Token is needed ?
+
+For Feature 2,3,
+1) Get Projects list for a user:- Get: project/getAll/{userId} | Response Payload: {projects array}
+2) Add Project:- Post: project/add
+3) Edit Project:- Post: project/update/{project_id} | RequestPayload: {new project json}
+4) Get a project:- project/get/{project_id} | Response Payload: {Project details}
+5) Get pebbles list:- pebble/getAll/{project_id} | Response: {pebbles array}
+
+For Feature 4,
+1) Get A pebble:- Get: pebble/get/{id} | response: {pebble json} 
+2) Add Pebble:- Post: pebble/add/{project_id} | request: {pebble json}
+3) Edit Pebble:- Post: pebble/update | request: {updated pebble json}
+
+More Features: 
+- delete project/delete pebble
+- validation: only todays pebbles can be editable, rest are readonly
+
+Existing Endpoints:
+
+getUser/Prasanth
+
+project/getAll/1
+project/add
+project/update/11
+project/get/11
+
+pebble/getAll/{project_id}
+pebble/get/{pebble_id}
+pebble/add/{project_id}
+pebble/update/{pebble_id}
+
+Sample request payload:
+------------------------
+{
+    "creationDate": "2026-01-09",
+    "description": "edited Learn Python coding and programming in next six months",
+    "lastUpdateDate": "2026-01-09",
+    "objectVersion": 1,
+    "targetDate": "2026-07-08",
+    "title": "Learn Python",
+    "topic1": "Solve DSA",
+    "topic2": "Read Core Python",
+    "topic3": "Hands-on Projects",
+    "topic4": "Spring Basics",
+    "topic5": "Python Streams"
 }
 
-Method: GET
-URL: localhost:5000/project/1
-Content-Type: application/json
-Response: {
-    "title": "Learn Java",
-    "description": "I want to learn coding and programming in java in next 6months",
-    "topics": [
-        "topic1": "Core Java",
-        "topic2": "Solve DSA Problems",
-        "topic3": "Spring Framework 1",
-        "topic4": "Practice Hands On Lab"
-    ],
-    "targetDate": "01-07-2026"
+{
+    "notes": "updateing concurrency day 2",
+    "objectVersion": 1,
+    "topic1Studied": 0.02,
+    "topic2Studied": 0.0,
+    "topic3Studied": 0.0,
+    "topic4Studied": 0.0,
+    "topic5Studied": 0.0
 }
 
-Method: POST
-URL: localhost:5000/addPebble
-Payload: {
-    "Topic": "Solve DSA Problems"
-    "note": "Leet code coding problem 324",
-    "state": "running"
+{
+"notes": "new pebble concurrency day 1",
+"topic1Studied": 0.02,
+"topic2Studied": 0.01,
+"topic3Studied": 0.0,
+"topic4Studied": 0.0,
+"topic5Studied": 0.0
 }
 
-Method: GET
-URL: localhost:5000/pebbles
-
-Method: GET
-URL: localhost:5000/pebble/1
-
-Study Logs:
-=> 6th January 2026: => 2hrs
-d- Documented the project plan and basic features
-d- Decide the simple tech stack to get started
-d- Draft basic table schema
-d- commit your first version by the EOD
-- Security ?
-
-=> 7th January 2026: => 2hrs
-- Prepare basic React UI 
-- Deploy existing simple project in cloud
-- Components needed: 
-    - Login, Logout, Authentication, 
-    - ProjectDashboard, AddProject
-    - PebbleDashboard, AddPebble
-    - Profile
+------------------- ------------------- 
+**Optional Ideas:**
+- Settings Page: Make few things configurable,
+    - {Alert time}
+    - Stopwatch Themes
+    - Dark & Light Theme
+- Streak Appreciation when one topic is studied for 3 continuous days
+- loading gif ?
+- If loading takes time, show quotes
+- Preview pebble in different modes [list or table]
+- Closing tab abruptly should ask the user's confirmation ?
+- Note down Prod best practices like Enable logging, metrics etc
+- Deep Study Music ex: youtu.be/p_heym7pmEk
+- Help in Handling Overwhelming Study phase ?
+- Browser Fullscreen focused mode with collapsable -> notes, timer and music
+- instead of project form > pick atleast five topics to cover [fetch them based on static DB > analytics > google web crawling ]
+- Dont know what skill to learn ? > A Skill Finder that suites users personality ?

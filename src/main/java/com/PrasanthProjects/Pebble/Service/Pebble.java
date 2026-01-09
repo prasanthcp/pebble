@@ -1,5 +1,4 @@
 package com.PrasanthProjects.Pebble.Service;
-
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -128,5 +127,18 @@ public class Pebble {
 
     public void setObjectVersion(int objectVersion) {
         this.objectVersion = objectVersion;
+    }
+
+    public void setPebble(Pebble existing, Users user) {
+        this.user = user;
+        this.notes = existing.getNotes();
+        this.state = "COMPLETED";
+        this.topic1Studied = existing.getTopic1Studied();
+        this.topic2Studied = existing.getTopic2Studied();
+        this.topic3Studied = existing.getTopic3Studied();
+        this.topic4Studied = existing.getTopic4Studied();
+        this.topic5Studied = existing.getTopic5Studied();
+        this.lastUpdateDate = LocalDate.now();
+        this.objectVersion++;
     }
 }

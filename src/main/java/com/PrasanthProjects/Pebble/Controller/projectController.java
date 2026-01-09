@@ -15,7 +15,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("project")
 public class ProjectController {
 
@@ -29,39 +29,42 @@ public class ProjectController {
         this.pebbleJPARepository = pebbleJPARepository;
     }
 
-    @GetMapping("/getAll/{userId}")
-    public ResponseEntity<ArrayList<Project>> goToProjectDashboard(ModelMap modelMap, @PathVariable int userId) throws Exception {
-        // modelMap.put("username",getAuthenticatedUser().getUsername()); String username = (String)modelMap.getAttribute("username"); int userId1 = getAuthenticatedUser().getUserId();
-        ArrayList<Project> projects = projectJPARepository.findByUserUserId(userId);
-        if(projects.isEmpty())
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity(projects, HttpStatus.OK);
-    }
-
     @GetMapping("/get/{project_id}")
     public ResponseEntity<Project> getProject(@PathVariable int project_id) {
         Optional project = projectJPARepository.findById(project_id);
+        return project.isEmpty() ? new ResponseEntity(HttpStatus.NOT_FOUND) : ResponseEntity.ok( (Project)project.get() );
+    }
 
-        if(project.isEmpty())
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-
-        return new ResponseEntity(project.get(), HttpStatus.OK);
+    @GetMapping("/getAll/{userId}")
+    public ResponseEntity<ArrayList<Project>> goToProjectDashboard(@PathVariable int userId) {
+        ArrayList<Project> projects = projectJPARepository.findByUserUserId(userId);
+        return projects.isEmpty() ? new ResponseEntity(HttpStatus.NOT_FOUND) :  ResponseEntity.ok(projects);
     }
 
     private Users getAuthenticatedUser() throws Exception {
         Users user = userJPARepository.findByUsername("Prasanth");
         if(user==null) throw new UserPrincipalNotFoundException("Prasanth");
-        return (Users)user;
+        return user;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Project> goToProjectDashboard(@RequestBody Project project) throws Exception {
+    public ResponseEntity<Project> addProject(@RequestBody Project project) throws Exception {
         project.setUser(getAuthenticatedUser());
         projectJPARepository.save(project);
-        return new ResponseEntity(project,HttpStatus.CREATED);
+        return new ResponseEntity<>(project,HttpStatus.CREATED);
     }
 
+    @PostMapping("/update/{project_id}")
+    public ResponseEntity<Project> updateProject(@PathVariable int project_id,
+                                                 @RequestBody Project project) throws Exception {
+        Optional<Project> existingProject = projectJPARepository.findById(project_id);
+        if(existingProject.isEmpty()) return ResponseEntity.notFound().build();
+
+        Project existing = existingProject.get();
+        existing.setProject(project, getAuthenticatedUser());
+        projectJPARepository.save(existing);
+        return ResponseEntity.ok(existing);
+    }
 }
 
 

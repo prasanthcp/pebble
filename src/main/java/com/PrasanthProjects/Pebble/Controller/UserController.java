@@ -23,11 +23,10 @@ public class UserController {
     }
 
     @GetMapping("/getUser/{username}")
-    public ResponseEntity<Users> getAUser(@PathVariable String username) throws Exception {
-        System.out.println(username);
+    public ResponseEntity<Users> getUser(@PathVariable String username) {
         Users user =  usersJpaRepository.findByUsername(username);
         if(user==null) {
-            throw new UserPrincipalNotFoundException(username);
-        } else return new ResponseEntity<>(user,HttpStatus.OK);
+            return ResponseEntity.notFound().build();
+        } else return ResponseEntity.ok(user);
     }
 }

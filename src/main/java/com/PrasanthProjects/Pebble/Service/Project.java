@@ -11,7 +11,7 @@ public class Project {
     private int id;
     private String title;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="user_id")
     private Users user;
 
@@ -20,11 +20,23 @@ public class Project {
     private int objectVersion;
 
     public Project() {
+    }
 
+    public void setProject(Project project, Users user) {
+        this.user = user;
+        this.title = project.getTitle();
+        this.description = project.getDescription();
+        this.topic1 = project.getTopic1();
+        this.topic2 = project.getTopic2();
+        this.topic3 = project.getTopic3();
+        this.topic4 = project.getTopic4();
+        this.topic5 = project.getTopic5();
+        this.lastUpdateDate = LocalDate.now();
+        this.objectVersion++;
     }
 
     public void setUser(Users user) {
-        user = user;
+        this.user = user;
     }
 
     public Users getUser() {

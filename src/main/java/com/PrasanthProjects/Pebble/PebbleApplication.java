@@ -3,6 +3,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,6 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 @ComponentScan("com.PrasanthProjects.Pebble")
 public class PebbleApplication {
@@ -22,12 +26,17 @@ public class PebbleApplication {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
+
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedMethods("*")
-                        .allowedOrigins("http://localhost:3000");
+                        .allowedOrigins(
+                                "http://localhost:3000",
+                                "https://pebbleui.netlify.app"
+                        )
+                        .allowedHeaders("Authorization", "Content-Type");
             }
         };
     }
@@ -42,10 +51,13 @@ public class PebbleApplication {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
 
-        http.authorizeHttpRequests(auth-> auth.anyRequest().authenticated())
+        http.authorizeHttpRequests(auth-> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .anyRequest().authenticated())
                 .csrf(csrf-> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .headers(headers-> headers.frameOptions(frame->frame.disable()));
 
         return http.build();
     }
