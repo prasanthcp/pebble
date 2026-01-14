@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface PebbleJpaRepository extends JpaRepository<Pebble,Integer> {
-
-    ArrayList<Pebble> findByProjectId(int projectId);
+    ArrayList<Pebble> findByProjectProjectId(int projectId);
+    long countByProjectProjectId(int projectId);
+    ArrayList<Pebble> findByProjectProjectIdOrderByPebbleIdDesc(int projectId);
 }

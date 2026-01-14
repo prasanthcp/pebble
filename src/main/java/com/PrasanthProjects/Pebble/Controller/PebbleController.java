@@ -6,67 +6,70 @@ import com.PrasanthProjects.Pebble.Repository.UsersJpaRepository;
 import com.PrasanthProjects.Pebble.Service.Pebble;
 import com.PrasanthProjects.Pebble.Service.Project;
 import com.PrasanthProjects.Pebble.Service.Users;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("pebble")
+@RequiredArgsConstructor
+@RestController @RequestMapping("pebble")
 public class PebbleController {
 
-    private ProjectJpaRepository projectJPARepository;
-    private UsersJpaRepository userJPARepository;
-    private PebbleJpaRepository pebbleJPARepository;
-
-    public PebbleController(ProjectJpaRepository projectJPARepository, UsersJpaRepository userJPARepository, PebbleJpaRepository pebbleJPARepository) {
-        this.projectJPARepository = projectJPARepository;
-        this.userJPARepository = userJPARepository;
-        this.pebbleJPARepository = pebbleJPARepository;
-    }
+    private final ProjectJpaRepository projectJPARepository;
+    private final UsersJpaRepository userJPARepository;
+    private final PebbleJpaRepository pebbleJPARepository;
+    private final UserController userController;
 
     @GetMapping("getAll/{project_id}")
     public ResponseEntity<ArrayList<Pebble>> goToPebbleDashboard(@PathVariable int project_id) throws Exception {
-        ArrayList<Pebble> pebbles = pebbleJPARepository.findByProjectId(project_id);
-        return new ResponseEntity(pebbles, HttpStatus.OK);
+        ArrayList<Pebble> pebbles =
+                pebbleJPARepository.findByProjectProjectIdOrderByPebbleIdDesc(project_id);
+        return ResponseEntity.ok(pebbles);
     }
 
     @GetMapping("get/{id}")
     public ResponseEntity<Pebble> goToPebble(@PathVariable int id) throws Exception {
-        Optional<Pebble> pebble = pebbleJPARepository.findById(id);
-        return new ResponseEntity(pebble.get(), HttpStatus.OK);
+        return pebbleJPARepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("add/{project_id}")
     public ResponseEntity<Pebble> addPebble(@RequestBody Pebble pebble, @PathVariable int project_id) throws Exception {
-        pebble.setUser(getAuthenticatedUser());
+        pebble.setUser(userController.getAuthenticatedUser());
         pebble.setProject(projectJPARepository.findById(project_id).get());
-        pebble.setState("STARTED"); pebble.setObjectVersion(1);
-        pebble.setCreationDate(LocalDate.now()); pebble.setLastUpdateDate(LocalDate.now());
-        pebbleJPARepository.save(pebble);
-        return new ResponseEntity(pebble, HttpStatus.OK);
+        pebble.setObjectVersion(1);
+        long pebblesCount = pebbleJPARepository.countByProjectProjectId(project_id);
+
+        if(pebblesCount == 0) {
+            Project project = projectJPARepository.findByProjectId(project_id)
+                                .orElseThrow(()-> new RuntimeException("Project not found !"));
+            project.setProjectStatus(true);
+            project.setProjectStartDate(LocalDateTime.now());
+            projectJPARepository.save(project);
+        }
+
+        pebble.setPebbleState("STARTED"); pebble.setObjectVersion(1);
+        pebble.setCreationDate(LocalDateTime.now());
+        return ResponseEntity.ok(pebbleJPARepository.save(pebble));
     }
 
     @PostMapping("update/{pebble_id}")
     public ResponseEntity<Pebble> updatePebble(@RequestBody Pebble pebble, @PathVariable int pebble_id) throws Exception {
 
-        Optional<Pebble> existingPebble = pebbleJPARepository.findById(pebble_id);
-        if(existingPebble.isEmpty()) return ResponseEntity.notFound().build();
-
-        Pebble existing = existingPebble.get();
-        existing.setPebble(pebble, getAuthenticatedUser());
-        pebbleJPARepository.save(existing);
-        return new ResponseEntity(existing, HttpStatus.OK);
-    }
-
-    private Users getAuthenticatedUser() throws Exception {
-        Users user = userJPARepository.findByUsername("Prasanth");
-        if(user==null) throw new UserPrincipalNotFoundException("Prasanth");
-        return (Users)user;
+        Users user = userController.getAuthenticatedUser();
+        return pebbleJPARepository
+                .findById(pebble_id)
+                .map(existing -> {
+                    existing.setPebble(pebble, user);
+                    return ResponseEntity.ok(pebbleJPARepository.save(existing));
+                }).orElse(ResponseEntity.notFound().build());
     }
 
 }

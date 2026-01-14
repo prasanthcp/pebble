@@ -1,7 +1,18 @@
 package com.PrasanthProjects.Pebble.Service;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
+import java.time.LocalDateTime;
+
+@Entity @Builder
+@Data @NoArgsConstructor @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Users {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,67 +22,14 @@ public class Users {
     @Column(nullable = false, unique = true)
     private String username;
     private String encryptedPassword;
-    private String creationDate;
-    private String lastUpdateDate;
+
+    @CreatedDate
+    private LocalDateTime creationDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastUpdateDate;
+
     private int objectVersion;
     private String role;
 
-    public Users() {
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEncryptedPassword() {
-        return encryptedPassword;
-    }
-
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
-    }
-
-    public String getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(String creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(String lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public int getObjectVersion() {
-        return objectVersion;
-    }
-
-    public void setObjectVersion(int objectVersion) {
-        this.objectVersion = objectVersion;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

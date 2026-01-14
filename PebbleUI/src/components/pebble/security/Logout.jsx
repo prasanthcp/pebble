@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {useAuth} from './security/Authcontext';
+import {useAuth} from './Authcontext';
 
 export default function Logout() {
 
@@ -22,7 +22,7 @@ export default function Logout() {
 
     function DontlogoutAction(){
         alert("Logout cancelled!");
-        navigate('/projects/prasanth');
+        navigate('/projects');
     }
 
 }

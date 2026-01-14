@@ -1,8 +1,12 @@
 package com.PrasanthProjects.Pebble;
+import com.PrasanthProjects.Pebble.JWT.JwtFilter;
+import jakarta.servlet.Filter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,11 +23,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
+@EnableJpaAuditing
 @ComponentScan("com.PrasanthProjects.Pebble")
 public class PebbleApplication {
 	public static void main(String[] args) {
         SpringApplication.run(PebbleApplication.class, args);
     }
+
+    @Autowired
+    JwtFilter jwtFilter;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -41,24 +50,26 @@ public class PebbleApplication {
         };
     }
 
-    @Bean
-    public UserDetailsService users() {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("Prasanth").password("{noop}Welcome1").roles("USER").build()
-        );
-    }
+//    @Bean
+//    public UserDetailsService users() {
+//        return new InMemoryUserDetailsManager(
+//                User.withUsername("Prasanth").password("{noop}Welcome1").roles("USER").build()
+//        );
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
 
         http.authorizeHttpRequests(auth-> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .anyRequest().authenticated())
-                .csrf(csrf-> csrf.disable())
-                .httpBasic(Customizer.withDefaults())
+                .requestMatchers("/auth/login").permitAll()
+                .anyRequest().authenticated()
+                    )
+                .csrf(csrf-> csrf.disable()) //.httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(headers-> headers.frameOptions(frame->frame.disable()));
 
+        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

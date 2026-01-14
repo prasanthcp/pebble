@@ -1,7 +1,7 @@
 Project Plan
 ------------
 **Title:** Pebble
-**Description:** Study Management Tool
+**Description:** Skill Development Tool
 
 **Tech Stack**
 ------------------
@@ -21,27 +21,62 @@ Deployment: OCI, Docker;
 
 **Main Features,**
 -----------------
-1) User logs in
+1) First show a static welcome page > Login in option
 2) Project's Dashboard Page
-   - shows the list of selectable existing projects (if any)
-   - option to Add a new project
+   - Shows the list of selectable existing projects/skills user wants to build (if any)
+   - Projects Table: 
+     - Title, Started Date, Target Completion [Months & Hours left], Topics, Frequency, Studied, 
+     - Actions: Edit Projects, Your Pebbles 
+   - (+) Add Project Option
 3) Project Page
-   - Add Project > Fill Project form > Save > Shows Project details + Add Pebbles Option
-   - Existing Project > Shows Project details + List of Existing Pebbles (decs table form) + Add Pebble option
+    - Manage your Project {project_code} -> Add/Edit Form
+     - Pebbles Dashboard:
+       - Pebbles Table: Project Title, PebbleId, Topic, Description, StartTime, EndTime, Studied
+       - (+) Add Pebble option
 4) Pebble Page
-   - Select a Topic [Required] and Description [Optional] and time studied > save > show readonly details of that pebble
-   - Better option: 
-     - User enters target study time > saves pebble > it shows readonly details & a stopwatch to track study slot 
-     - Stopwatch alerts a beep every {0.5 hour}
-     - Studies for 1 hour and stops stopwatch 
-     - if forgot to stop it or closed app abruptly [pause it with description]
-     - Update the status of pebble and studied time
+   - Manage your Pebble for {project_code} -> Add/Edit Form > Save
+- Better option: 
+  - User enters target study time > saves pebble > it shows readonly details & a stopwatch to track study slot 
+  - Stopwatch alerts a beep every {0.5 hour}
+  - Studies for 1 hour and stops stopwatch
+  - if forgot to stop it or closed app abruptly [pause it with description]
+  - Update the status of pebble and studied time
+
+**Must Do Changes:**
+-------------------
+d- Welcome Page Static Content
+d- Improve CSS a bit
+d- Reduce 5 to 3 topics
+d- Add Status, Frequency, Hours Studied, field to Project table
+  d- update status and start date when a projects first pebble comes up
+d- Target Completion Computation Method,
+  d- start date set when a pebble started
+  d- default start date is creation date
+  d- Hours studied is 0 for inactive projects
+d- Topics List instead of each Topic in ProjectsDashboard Page
+d- Reduce Boilerplate code [using Lombok]
+d- Add StartTime, EndTime, Topic in Pebble Object
+d- Add AOP Logs for all Endpoints
+- Pebble Table list Columns+
+  d- sort id desc
+  - StudiedHours Computation
+d- Understand and use Date Time APIs in Java, JS
+- Configure JWT Token
+  1) Add jwt dependencies [jjwt-api, jjwt-impl, jjwt-jackson] in pom
+  2) Generate, validate JWT Token
+  3) Filter
+    
+- login, logout emoji
+- Pebble crow Logo
+  
+d- Use code instead of passing id in URL : project_code
+- Study Plan Browser Reminder Notifications or Calender Reminders
 
 **Database Schema**
 -------------------
 Table 1: Project
 Columns: id (primary key), userid (foreign key), title, description, topic1, topic2, 
-topic3, topic4, topic5, target_date, creation_date, last_update_date, object_version
+topic3, target_date, creation_date, last_update_date, object_version
 
 Table 2: Pebble
 Columns: id (primary key), project_id (foreign key), userid (foreign key), note, 
@@ -124,7 +159,13 @@ Sample request payload:
 }
 
 ------------------- ------------------- 
+
 **Optional Ideas:**
+- Improvise Welcome Page to include - Science of learning Anything; 
+- User Table field: Free Hours Available in a day
+- Pebble Page: Notes + Timer
+- idea Lab > Movable Ideas
+- Change Form Fill to ChatBot
 - Settings Page: Make few things configurable,
     - {Alert time}
     - Stopwatch Themes
@@ -139,4 +180,14 @@ Sample request payload:
 - Help in Handling Overwhelming Study phase ?
 - Browser Fullscreen focused mode with collapsable -> notes, timer and music
 - instead of project form > pick atleast five topics to cover [fetch them based on static DB > analytics > google web crawling ]
-- Dont know what skill to learn ? > A Skill Finder that suites users personality ?
+- Don't know what skill to learn ? > A Skill Finder that suites users personality ?
+
+Understanding Date Time APIs:
+- @CreatedDate @LastModifiedDate LocalDateTime dayjs dayjs(<date>).format("DD/MM/YYYY HH:mm")
+
+
+
+Debug Notes:
+
+
+2026-01-14T10:28:53.321+05:30  WARN 11185 --- [Pebble] [nio-5001-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` from String "2026-01-14": Failed to deserialize `java.time.LocalDateTime` (with format 'ParseCaseSensitive(false)(Value(Year,4,10,EXCEEDS_PAD)'-'Value(MonthOfYear,2)'-'Value(DayOfMonth,2))'T'(Value(HourOfDay,2)':'Value(MinuteOfHour,2)[':'Value(SecondOfMinute,2)[Fraction(NanoOfSecond,0,9,DecimalPoint)]])'): (java.time.format.DateTimeParseException) Text '2026-01-14' could not be parsed at index 10]

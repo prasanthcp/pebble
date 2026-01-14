@@ -1,73 +1,73 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from 'axios';
 
+// Create axios client with baseURL
 const apiClient = axios.create(
     { 
-        baseURL: "https://pebble-backend.onrender.com",  //"http://localhost:5001",
-        auth: {
-            username: "Prasanth",
-            password: "Welcome1"
-        }
+        baseURL: "http://localhost:5001" //, auth: { username: "Prasanth", password: "Welcome1" }
     }
 );
 
+// Attach interceptor to apiClient
+apiClient.interceptors.request.use(config => {
+    const Token = localStorage.getItem("Token");
+    console.log("intercepting with Token as : "+ Token)
+    if(Token) {
+        console.log("inside if:"+ Token)
+        config.headers.Authorization =`Bearer ${Token}`;
+    } else {
+        delete config.headers.Authorization;
+    }
+    return config;
+});
+
+// API call to retrieve user
 export const retrieveUser = (username) => {
-    return apiClient.get('/getUser/'+username);
+    return apiClient.get(`/getUser/${username}`);
 }
 
-export const AuthContext = createContext(); // create context> put state > share with other components
+// Context setup
+export const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export default function AuthProvider({children}) {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [username,setUsername] = useState("DummyUsername");
-    const [userId,setUserId] = useState(0);
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [username,setUsername] = useState("DummyUsername");
+const [userId,setUserId] = useState(0);
 
-    useEffect( ()=>
-    {
-        if (isAuthenticated) { 
-            const fetchUser = async () => { 
-                try { 
-                    const response = await retrieveUser(username); 
-                    // await the Axios Promise 
-                    console.log("retrieveUser response:", response); 
-                    const user_id = response.data.userId;
-                    setUserId(user_id); 
-                    console.log("user_id is:", userId+ " "+user_id); 
-                } 
-                catch (error) { 
-                    console.error("error in retrieving user", error); 
-                } 
-            }; 
-            fetchUser(); // call the async function 
-        }
-    }, [isAuthenticated, username]
-    );
+return (
+    <AuthContext.Provider 
+    value= { {isAuthenticated, setIsAuthenticated, login, logout, username, userId} }>
+        {children}
+    </AuthContext.Provider>
+);
 
-    return (
-        <AuthContext.Provider value= { {isAuthenticated, setIsAuthenticated, login, logout, username, userId} }>
-            {children}
-        </AuthContext.Provider>
-    );
+// Logout clears state + Token
+function logout() {
+    setIsAuthenticated(false);
+    localStorage.removeItem("Token");
+    setUsername("dummyUsername");
+    setUserId(0);
+}
 
-    function login(username, password) {
+async function login(username, password) {
+    try {
         console.log("In login method: "+ username+" "+password);
-        const result = username === 'Prasanth' && password === 'Welcome1';
-
-        if(result){
-            setUsername(username);
-            setIsAuthenticated(result);
-        }
-
-        return result;
-    }
-
-    function logout() {
+        const res = await apiClient.post("/auth/login",{username, password});
+        const Token = res.data.Token;
+        console.log("In login method Token: "+ Token);
+        if(Token) localStorage.setItem("Token",res.data.Token);
+        setUsername(res.data.username);
+        setUserId(res.data.userId);
+        setIsAuthenticated(true);
+        return true;
+    } catch(error) {
+        console.log("Login Failed " + error);
         setIsAuthenticated(false);
-        setUsername("dummyUsername");
-        setUserId(0);
+        return false;
     }
+}
 
 }
 

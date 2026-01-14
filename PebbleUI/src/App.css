@@ -14,6 +14,8 @@
   }
 }
 
+.warningMessage { color: #b00020; /* deep red */ background-color: #ffe5e5; font-weight: bold; padding: 10px; border: 1px solid #b00020; border-radius: 4px; }
+
 .app-header {
   background: #111827;
   color: #f9fafb;
@@ -57,7 +59,70 @@ label,input,button {
 .btn-primary { background: #2563eb; color: #fff; } .btn-primary:hover { background: #1d4ed8; } 
 .btn-secondary { background: #e5e7eb; color: #111827; } .btn-secondary:hover { background: #d1d5db; }
 
+/* Base table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
 
-.table { width: 100%; border-collapse: collapse; margin-top: 1rem; } .table th, .table td { padding: 0.75rem 1rem; text-align: left; } .table th { background: #f3f4f6; font-weight: 600; } .table tr:nth-child(even) { background: #f9fafb; }
+/* Header cells */
+.table th {
+  background-color: #f3f4f6;
+  color: #111;
+  font-weight: 600;
+  font-size: 130%;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 2px solid #ccc;
+}
+
+select { max-width: 300px; }
+
+fieldset { 
+  display: flex; 
+  align-items: center; /* vertical centering */ 
+  justify-content: center; /* horizontal centering */
+}
+
+/* Body cells */
+.table td {
+  padding: 0.5rem 0.75rem;
+  text-align: center;
+  vertical-align: middle;
+  
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Zebra striping */
+.table tr:nth-child(even) {
+  background-color: #f9fafb; /* light gray */
+}
+
+.table tr:nth-child(odd) {
+  background-color: #ffffff; /* white */
+}
+
 
 .card { background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 1.5rem; margin-bottom: 1rem; transition: transform 0.2s ease; } .card:hover { transform: translateY(-2px); }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: "Helvetica Neue", Arial, sans-serif; 
+  font-size: 14px; /* readable but compact */ 
+  color: #111; /* dark neutral text */ 
+  line-height: 1.4;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}

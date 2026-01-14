@@ -6,8 +6,6 @@ git remote add origin https://github.com/prasanthcp/pebble.git
 git branch -M main
 git push -u origin main
 
-
-
 # GitHub Open Source Contribution — Complete Command Guide
 
 ## 1. Fork the Project on GitHub

@@ -1,6 +1,6 @@
 import { useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useAuth} from './security/Authcontext';
+import {useAuth} from './Authcontext';
 
 export default function Login() {
 
@@ -16,7 +16,7 @@ export default function Login() {
     <> 
     <title>Login Component</title>
        {!isAuthenticated && <div className="Login Form">
-            { showWarning && <div className="warningMessage">Login failed try again</div> }
+            { showWarning && <div className="warningMessage" role="alert">Login failed try again</div> }
             
                 <div className="login-form">
                     <div>

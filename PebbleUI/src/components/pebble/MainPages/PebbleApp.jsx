@@ -1,15 +1,15 @@
 import './PebbleApp.css';
 import {useContext,useState} from 'react';
 import {BrowserRouter, Routes,Route} from "react-router-dom";
-import Login from './Login';
+import Login from '../security/Login';
 import ProjectDashboard from './ProjectDashboard';
-import Error from './smallcomponents/Error';
+import Error from '../smallcomponents/Error';
 import PebbleDashboard from './PebbleDashboard';
-import Logout from './Logout';
-import Header from './smallcomponents/Header';
-import Footer from './smallcomponents/Footer';
-import AuthProvider from './security/Authcontext';
-import {useAuth} from './security/Authcontext';
+import Logout from '../security/Logout';
+import Header from '../smallcomponents/Header';
+import AuthProvider from '../security/Authcontext';
+import Welcome from './Welcome';
+import {useAuth} from '../security/Authcontext'
 import Pebble from './Pebble';
 import Project from './Project';
 
@@ -31,6 +31,19 @@ export default function PebbleApp() {
                   <ProjectDashboard />
                 </AuthenticatedRoute>} />
 
+                <Route path="/welcome" element={
+                  <div className="main-content">
+                    <Welcome />
+                  </div>
+                }/>
+
+                <Route path="/" element={
+                  <div className="main-content">
+                    <Welcome />
+                  </div>
+                }/>
+
+
               <Route path="/pebbles/:projectId" element={
                 <AuthenticatedRoute>
                   <PebbleDashboard />
@@ -49,7 +62,6 @@ export default function PebbleApp() {
               <Route path="/logout" element={<Logout />} />
             </Routes>
           </main>
-          <Footer className="app-footer" />
         </AuthProvider>
       </BrowserRouter>
     </div>

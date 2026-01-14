@@ -2,13 +2,26 @@ import axios from 'axios';
 
 const apiClient = axios.create(
     {
-        baseURL: "https://pebble-backend.onrender.com", //"http://localhost:5001",
-        auth: {
-            username: "Prasanth",
-            password: "Welcome1"
-        }
+        baseURL: "http://localhost:5001",
+        // auth: {
+        //     username: "Prasanth",
+        //     password: "Welcome1"
+        // }
     }
 );
+
+// Attach interceptor to apiClient
+apiClient.interceptors.request.use(config => {
+    const Token = localStorage.getItem("Token");
+    console.log("intercepting with Token as : "+ Token)
+    if(Token) {
+        console.log("inside if:"+ Token)
+        config.headers.Authorization =`Bearer ${Token}`;
+    } else {
+        delete config.headers.Authorization;
+    }
+    return config;
+});
 
 export const retrievePebblesApi = (projectId) => {
     return apiClient.get('/pebble/getAll/'+projectId);
@@ -18,11 +31,11 @@ export const retrievePebbleApi = (pebbleId) => {
     return apiClient.get('/pebble/get/'+pebbleId); 
 }
 
-export const createPebbleApi = (projectId,pebble) => {
+export const createPebbleApi = (pebble, projectId) => {
     return apiClient.post('/pebble/add/'+projectId, pebble);
 }
 
-export const updatePebbleApi = (pebble,pebbleId) => {
+export const updatePebbleApi = (pebble, pebbleId) => {
    return apiClient.post('/pebble/update/'+pebbleId, pebble);
 }
 

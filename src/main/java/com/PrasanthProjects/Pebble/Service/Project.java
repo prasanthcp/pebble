@@ -1,141 +1,66 @@
 package com.PrasanthProjects.Pebble.Service;
 
 import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-@Entity
+@Entity @Data @Builder // Use the builder for creation, keep setters for updates.
+@NoArgsConstructor @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Project {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private String title;
+    private Integer projectId;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    private String projectCode;
+    private String projectName;
+
+    @ManyToOne @JoinColumn(name = "user_id")
     private Users user;
 
-    private String description, topic1, topic2, topic3, topic4, topic5;
-    private LocalDate targetDate, creationDate, lastUpdateDate;
-    private int objectVersion;
+    private String projectDescription;
+    private String topic1;
+    private String topic2;
+    private String topic3;
 
-    public Project() {
-    }
+    @Builder.Default
+    private Boolean projectStatus = false; // default inactive
 
+    @Builder.Default
+    private Integer frequency = 6; // default frequency
+
+    @Builder.Default
+    private LocalDateTime projectStartDate = LocalDateTime.now(); // default to today
+
+    @CreatedDate
+    private LocalDateTime creationDate;
+
+    @LastModifiedDate
+    private LocalDateTime lastUpdateDate;
+
+    @Builder.Default
+    private Integer objectVersion = 0;
+
+    /** Custom update method to copy fields from another project and associate with a given user. */
     public void setProject(Project project, Users user) {
         this.user = user;
-        this.title = project.getTitle();
-        this.description = project.getDescription();
+        this.projectName = project.getProjectName();
+        this.projectDescription = project.getProjectDescription();
         this.topic1 = project.getTopic1();
         this.topic2 = project.getTopic2();
         this.topic3 = project.getTopic3();
-        this.topic4 = project.getTopic4();
-        this.topic5 = project.getTopic5();
-        this.lastUpdateDate = LocalDate.now();
         this.objectVersion++;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getTargetDate() {
-        return targetDate;
-    }
-
-    public void setTargetDate(LocalDate targetDate) {
-        this.targetDate = targetDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTopic1() {
-        return topic1;
-    }
-
-    public void setTopic1(String topic1) {
-        this.topic1 = topic1;
-    }
-
-    public String getTopic2() {
-        return topic2;
-    }
-
-    public void setTopic2(String topic2) {
-        this.topic2 = topic2;
-    }
-
-    public String getTopic3() {
-        return topic3;
-    }
-
-    public void setTopic3(String topic3) {
-        this.topic3 = topic3;
-    }
-
-    public String getTopic4() {
-        return topic4;
-    }
-
-    public void setTopic4(String topic4) {
-        this.topic4 = topic4;
-    }
-
-    public String getTopic5() {
-        return topic5;
-    }
-
-    public void setTopic5(String topic5) {
-        this.topic5 = topic5;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
-    }
-
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
-    }
-
-    public int getObjectVersion() {
-        return objectVersion;
-    }
-
-    public void setObjectVersion(int objectVersion) {
-        this.objectVersion = objectVersion;
+    @PrePersist @PreUpdate
+    public void generateCode() {
+        if(projectName.isEmpty())
+            this.projectCode = projectName.trim().replaceAll("[^a-zA-Z0-9\\s]", "")
+                                .replaceAll("\\s+", "-").toLowerCase();
     }
 }

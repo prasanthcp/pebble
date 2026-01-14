@@ -5,6 +5,7 @@ import com.PrasanthProjects.Pebble.Service.Project;
 import com.PrasanthProjects.Pebble.Service.Users;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -22,11 +24,9 @@ public class UserController {
         this.usersJpaRepository = usersJpaRepository;
     }
 
-    @GetMapping("/getUser/{username}")
-    public ResponseEntity<Users> getUser(@PathVariable String username) {
-        Users user =  usersJpaRepository.findByUsername(username);
-        if(user==null) {
-            return ResponseEntity.notFound().build();
-        } else return ResponseEntity.ok(user);
+    public Users getAuthenticatedUser() throws Exception {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return usersJpaRepository.findByUsername(username)
+                .orElseThrow(()-> new UserPrincipalNotFoundException(username));
     }
 }

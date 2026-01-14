@@ -8,12 +8,12 @@ function HeaderComponent({ className }) {
   return (
     <header className={className}>
       <nav className="navbar navbar-expand-lg">
-        <a className="navbar-brand fs-2 fw-bold text-white" href="/pebbles/1">Pebbles</a>
+        <Link className="navbar-brand fs-2 fw-bold text-white" to="/welcome">Pebble</Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav me-auto">
             {isAuthenticated && (
               <li className="nav-item">
-                <Link className="nav-link text-white" to="/projects">Home</Link>
+                <Link className="nav-link text-white" to="/projects">Projects</Link>
               </li>
             )}
           </ul>
