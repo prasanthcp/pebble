@@ -4,7 +4,7 @@ import axios from 'axios';
 // Create axios client with baseURL
 const apiClient = axios.create(
     { 
-        baseURL: "http://localhost:5001" //, auth: { username: "Prasanth", password: "Welcome1" }
+        baseURL: "http://localhost:8080" //, auth: { username: "Prasanth", password: "Welcome1" }
     }
 );
 

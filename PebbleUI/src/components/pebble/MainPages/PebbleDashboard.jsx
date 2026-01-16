@@ -21,7 +21,7 @@ export default function PebbleDashboard() {
             console.log(response.data + " "+ projectId);
             setPebbles(response.data)
         })
-        .catch();
+        .catch((error)=> console.error("Error retrieving pebbles:", error));
     }
 
     return (

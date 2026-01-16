@@ -24,6 +24,7 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody AuthRequest request) {
         try {
             String username = request.getUsername();
+            System.out.println(username +" ! ");
             String token = authService.authenticate(username, request.getPassword());
             System.out.println(username +" ! "+ token);
             Optional<Users> user  = usersJpaRepository.findByUsername(username);

@@ -21,17 +21,17 @@ export default function Project() {
         creationDate: today,
         lastUpdateDate: today,
         objectVersion: 1,
-        projectStartDate: today,
+        projectStartDate: moment().format("YYYY-MM-DDTHH:mm"),
         topic1: "Work on topic1",
         topic2: "Work on topic2",
         topic3: "Work on topic",
-        projectStatus: "Started",
+        projectStatus: 0,
         frequency: 6,
       });
     } else {
-      retrieveProjectApi(userId)
+      retrieveProjectApi(projectId)
         .then((response) => setProject(response.data))
-        .catch((error) => console.error("Couldn't get projects for this user:", error));
+        .catch((error) => console.error("Couldn't get project details for project:"+projectId, error));
     }
   }, [projectId, userId]);
 
@@ -46,8 +46,8 @@ export default function Project() {
     
     if (!values.projectStartDate || !moment(values.projectStartDate).isValid())
       errors.projectStartDate = "Enter a valid Target Date";
-    else if (moment(values.projectStartDate).isBefore(moment()))
-      errors.projectStartDate = "Enter a Target Date in the Future";
+    else if (moment(values.projectStartDate).isBefore(moment().format("YYYY-MM-DDTHH:mm")))
+      errors.projectStartDate = "Can't go back in Clock brother !";
     
     if (!values.topic1 && !values.topic2 && !values.topic3)
       errors.topic1 = "Enter at least one Topic";
@@ -97,6 +97,12 @@ export default function Project() {
           </fieldset>
 
           <fieldset>
+            <label>Status:</label>
+            <Field type="text" name="projectStatus" />
+            <ErrorMessage name="projectStatus" component="div" className="alert alert-warning" />
+          </fieldset>
+
+          <fieldset>
             <label>Target Date:</label>
             <Field type="datetime-local" name="projectStartDate" />
             <ErrorMessage name="projectStartDate" component="div" className="alert alert-warning" />
@@ -125,7 +131,7 @@ export default function Project() {
           </fieldset>
 
           <div>
-            <button className="btn btn-primary" type="submit">Save</button>
+            <button className="btn btn-primary  my-4 me-3" type="submit">Save</button>
             <button className="btn btn-secondary" type="button" onClick={() => navigate("/projects")}>
               Cancel
             </button>

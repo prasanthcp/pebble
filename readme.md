@@ -61,11 +61,25 @@ d- Add AOP Logs for all Endpoints
   d- sort id desc
   - StudiedHours Computation
 d- Understand and use Date Time APIs in Java, JS
-- Configure JWT Token
+d- Configure JWT Token
   1) Add jwt dependencies [jjwt-api, jjwt-impl, jjwt-jackson] in pom
   2) Generate, validate JWT Token
-  3) Filter
-    
+  3) Filter 
+  4) Note: Permit auth call without spring security 
+- Oracle Cloud
+  - Create Oracle Free tier > Create Autonomous DB > Download Wallet > in SQLDeveloper using CloudWallet
+    - Wallet info: Connections to your Autonomous AI Database are secured, and can be authorized using TLS or mTLS authentication options. TLS authentication is easier to use, provides better connection latency, and does not require you to download client credentials (wallet) if any of these is true for your connections:
+        You are using JDBC Thin Client (version 12.2.0.1 or higher) with JDK 8(u163+) or higher.
+        You are using the Python python-oracledb driver.
+        You are using ODP.NET version 19.14 (or higher), or 21.5 (or higher).
+        You are using an Oracle Call Interface based driver with Oracle Client libraries version 19.14 (or higher), or 21.5 (or higher).
+    - Oracle Autonomous DB (Free) is always provisioned and reachable
+  - Add JDBC Dependency, Properties [add ${DB_PASSWORD} OS property; inject OCI env var at deployment ]
+  - Connect to Oracle SQL [ADMIN/DB_PASSWORD]
+  - Run the Application [In prod add program arg --spring.profiles.active=prod]
+  - Add Junit tests 
+  - Enable Actuator > Logs
+  - Deploy your application [CI/CD ?] 
 - login, logout emoji
 - Pebble crow Logo
   

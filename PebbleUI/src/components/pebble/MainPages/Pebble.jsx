@@ -89,18 +89,22 @@ export default function Pebble() {
 
           <fieldset>
             <label>Start Time:</label>
-            <Field type="datetime-local" name="pebbleStartTime" />
+            <Field type="datetime-local" name="pebbleStartTime" 
+            min={moment().startOf('day').format('YYYY-MM-DDTHH:mm')}
+            max={moment().endOf('day').format('YYYY-MM-DDTHH:mm')}/>
             <ErrorMessage name="pebbleStartTime" component="div" className="alert alert-warning" />
           </fieldset>
 
           <fieldset>
             <label>End Time:</label>
-            <Field type="datetime-local" name="pebbleEndTime" />
+            <Field type="datetime-local" name="pebbleEndTime" 
+            min={moment().startOf('day').format('YYYY-MM-DDTHH:mm')}
+            max={moment().endOf('day').format('YYYY-MM-DDTHH:mm')}/>
             <ErrorMessage name="pebbleEndTime" component="div" className="alert alert-warning" />
           </fieldset>
 
           <div>
-            <button type="submit" className="btn btn-primary">Save</button>
+            <button type="submit" className="btn btn-primary my-4 me-3">Save</button>
             <button type="button" className="btn btn-secondary" onClick={() => navigate(-1, {state: {topics}})}>
               Cancel
             </button>

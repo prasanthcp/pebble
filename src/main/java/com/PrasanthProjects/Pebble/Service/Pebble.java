@@ -15,7 +15,8 @@ public class Pebble {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pebbleId;
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "project_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id")
     private Project project;
 
     @ManyToOne @JoinColumn(name = "user_id")
@@ -45,6 +46,8 @@ public class Pebble {
     public void setPebble(Pebble existing, Users user) {
         this.user = user;
         this.pebbleNotes = existing.getPebbleNotes();
+        this.pebbleStartTime = existing.getPebbleStartTime();
+        this.pebbleEndTime = existing.getPebbleEndTime();
         this.pebbleState = "COMPLETED";
         this.topic = existing.getTopic();
         this.objectVersion++;

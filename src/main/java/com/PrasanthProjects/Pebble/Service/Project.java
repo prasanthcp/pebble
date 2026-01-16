@@ -29,7 +29,7 @@ public class Project {
     private String topic3;
 
     @Builder.Default
-    private Boolean projectStatus = false; // default inactive
+    private Integer projectStatus = 1; // default inactive
 
     @Builder.Default
     private Integer frequency = 6; // default frequency

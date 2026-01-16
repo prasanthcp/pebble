@@ -50,7 +50,7 @@ public class PebbleController {
         if(pebblesCount == 0) {
             Project project = projectJPARepository.findByProjectId(project_id)
                                 .orElseThrow(()-> new RuntimeException("Project not found !"));
-            project.setProjectStatus(true);
+            project.setProjectStatus(1);
             project.setProjectStartDate(LocalDateTime.now());
             projectJPARepository.save(project);
         }

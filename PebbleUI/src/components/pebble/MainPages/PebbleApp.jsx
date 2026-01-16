@@ -12,6 +12,7 @@ import Welcome from './Welcome';
 import {useAuth} from '../security/Authcontext'
 import Pebble from './Pebble';
 import Project from './Project';
+import Stopwatch from '../smallcomponents/Stopwatch';
 
 const AuthenticatedRoute = ({children} ) => (useAuth().isAuthenticated) ? children : <Login />;
 
@@ -52,6 +53,7 @@ export default function PebbleApp() {
               <Route path="/pebble/:pebbleId" element={
                 <AuthenticatedRoute>
                   <Pebble />
+                  <Stopwatch />
                 </AuthenticatedRoute>} />
 
               <Route path="/project/:projectId" element={

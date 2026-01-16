@@ -10,7 +10,7 @@ VALUES
  false, 6, DATEADD('DAY', 180, CURRENT_DATE), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
 ('Master Spring Boot', 'Build production-ready Spring Boot applications', 1,
- 'Spring Core', 'Spring Boot', 'JPA & Hibernate',
+ 'Spring Core', 'Spring Boot', 'JPA Hibernate',
  false, 6, DATEADD('DAY', 120, CURRENT_DATE), CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1),
 
 ('DSA Intensive', 'Strengthen problem solving with DSA', 1,
