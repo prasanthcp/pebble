@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan("com.PrasanthProjects.Pebble")
 public class PebbleApplication {
 	public static void main(String[] args) {
@@ -58,7 +60,7 @@ public class PebbleApplication {
 //    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth-> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
