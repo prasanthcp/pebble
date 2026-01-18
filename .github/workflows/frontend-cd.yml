@@ -1,0 +1,32 @@
+name: Pebble UI Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - "PebbleUI/**"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd PebbleUI
+          npm install
+
+      - name: Build & Deploy
+        run: |
+          cd PebbleUI
+          npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
