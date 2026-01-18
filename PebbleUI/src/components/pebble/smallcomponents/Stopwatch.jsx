@@ -33,25 +33,25 @@ export default function Stopwatch() {
 
     }
 
-    function startTimer() {
-        intervalRef.current = setInterval(
-            () => {
-                    setSeconds(
-                        (prevSeconds)=> {
-                            if(prevSeconds==59) {
+    // function startTimer() {
+    //     intervalRef.current = setInterval(
+    //         () => {
+    //                 setSeconds(
+    //                     (prevSeconds)=> {
+    //                         if(prevSeconds==59) {
 
-                                setMinutes(
-                                    (prevMinutes) 
-                                )
+    //                             setMinutes(
+    //                                 (prevMinutes) 
+    //                             )
 
-                                return 0;
-                            }
-                            return prevSeconds+1;
-                        }
-                    ); 
-                },1000)
+    //                             return 0;
+    //                         }
+    //                         return prevSeconds+1;
+    //                     }
+    //                 ); 
+    //             },1000)
 
-    }
+    // }
             // ()=> { setSeconds((prevSeconds)=> (prevSeconds+1)%60); },1000);
             // setInterval(()=> { setMinutes((prevMinutes)=> (prevMinutes+1)%60); },60000);
             // setInterval(()=> { setHours((prevHours)=> (prevHours+1)%60); },3600000);

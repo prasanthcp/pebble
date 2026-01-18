@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - "PebbleUI/**"
+      - "pebbleui/**"
 
 jobs:
   deploy:
@@ -20,12 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd PebbleUI
+          cd pebbleui
           npm install
 
       - name: Build & Deploy
         run: |
-          cd PebbleUI
+          cd pebbleui
           npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
