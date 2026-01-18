@@ -1,6 +1,5 @@
-package com.PrasanthProjects.Pebble;
-import com.PrasanthProjects.Pebble.JWT.JwtFilter;
-import jakarta.servlet.Filter;
+package com.prasanthprojects.pebble;
+import com.prasanthprojects.pebble.jwt.jwtfilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,31 +8,24 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-@ComponentScan("com.PrasanthProjects.Pebble")
+@ComponentScan("com.prasanthprojects.pebble")
 public class PebbleApplication {
 	public static void main(String[] args) {
         SpringApplication.run(PebbleApplication.class, args);
     }
 
     @Autowired
-    JwtFilter jwtFilter;
+    jwtfilter jwtFilter;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

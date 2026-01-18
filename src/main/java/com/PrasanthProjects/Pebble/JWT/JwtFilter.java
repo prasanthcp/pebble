@@ -1,4 +1,4 @@
-package com.PrasanthProjects.Pebble.JWT;
+package com.prasanthprojects.pebble.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 @Component @AllArgsConstructor @NoArgsConstructor
-public class JwtFilter extends OncePerRequestFilter {
+public class jwtfilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUtil jwtUtil;
+    private jwtutil jwtUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

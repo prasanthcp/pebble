@@ -1,4 +1,4 @@
-package com.PrasanthProjects.Pebble.JWT;
+package com.prasanthprojects.pebble.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,7 +10,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JwtUtil {
+public class jwtutil {
 
     private static final String SECRET_KEY = "pramanampramanampramanampramanam";
     private static final long EXPIRATION_TIME = 3600000; // 1 hour

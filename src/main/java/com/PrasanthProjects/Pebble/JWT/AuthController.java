@@ -1,7 +1,7 @@
-package com.PrasanthProjects.Pebble.JWT;
+package com.prasanthprojects.pebble.jwt;
 
-import com.PrasanthProjects.Pebble.Repository.UsersJpaRepository;
-import com.PrasanthProjects.Pebble.Service.Users;
+import com.prasanthprojects.pebble.repository.usersjparepository;
+import com.prasanthprojects.pebble.service.users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,21 +15,21 @@ import java.util.Optional;
 
 @RestController @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class AuthController {
+public class authcontroller {
 
-    @Autowired private final AuthService authService;
-    @Autowired private final UsersJpaRepository usersJpaRepository;
+    @Autowired private final authservice authService;
+    @Autowired private final usersjparepository usersJpaRepository;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<?> login(@RequestBody com.prasanthprojects.pebble.jwt.authrequest request) {
         try {
             String username = request.getUsername();
             System.out.println(username +" ! ");
             String token = authService.authenticate(username, request.getPassword());
             System.out.println(username +" ! "+ token);
-            Optional<Users> user  = usersJpaRepository.findByUsername(username);
+            Optional<users> user  = usersJpaRepository.findByUsername(username);
             if(user.isEmpty()) System.out.println("User not found!");
-            return ResponseEntity.ok(new AuthResponse(token,user.get().getUsername(),user.get().getUserId()));
+            return ResponseEntity.ok(new authresponse(token,user.get().getUsername(),user.get().getUserId()));
         } catch(Exception ex) {
             ex.getStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

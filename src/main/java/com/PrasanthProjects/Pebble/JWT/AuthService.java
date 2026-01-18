@@ -1,20 +1,19 @@
-package com.PrasanthProjects.Pebble.JWT;
+package com.prasanthprojects.pebble.jwt;
 
-import com.PrasanthProjects.Pebble.Repository.UsersJpaRepository;
-import com.PrasanthProjects.Pebble.Service.Users;
+import com.prasanthprojects.pebble.repository.usersjparepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AuthService {
+public class authservice {
 
-    private final UsersJpaRepository usersJpaRepository;
-    private final JwtUtil jwtUtil;
+    private final usersjparepository usersJpaRepository;
+    private final jwtutil jwtUtil;
 
     public String authenticate(String username, String password) {
 
-        Users user = usersJpaRepository.findByUsername(username)
+        com.prasanthprojects.pebble.service.users user = usersJpaRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Invalid username"));
 
         if (!user.getEncryptedPassword().equals(password)) {

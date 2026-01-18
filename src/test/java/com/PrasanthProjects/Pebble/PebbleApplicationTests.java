@@ -1,10 +1,10 @@
-package com.PrasanthProjects.Pebble;
+package com.prasanthprojects.pebble;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PebbleApplicationTests {
+class pebbleapplicationtests {
 
 	@Test
 	void contextLoads() {

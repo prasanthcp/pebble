@@ -1,4 +1,4 @@
-package com.PrasanthProjects.Pebble.Service;
+package com.prasanthprojects.pebble.service;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,13 +6,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity @Data @Builder // Use the builder for creation, keep setters for updates.
 @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Project {
+public class project {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer projectId;
@@ -21,7 +20,7 @@ public class Project {
     private String projectName;
 
     @ManyToOne @JoinColumn(name = "user_id")
-    private Users user;
+    private users user;
 
     private String projectDescription;
     private String topic1;
@@ -47,7 +46,7 @@ public class Project {
     private Integer objectVersion = 0;
 
     /** Custom update method to copy fields from another project and associate with a given user. */
-    public void setProject(Project project, Users user) {
+    public void setProject(project project, users user) {
         this.user = user;
         this.projectName = project.getProjectName();
         this.projectDescription = project.getProjectDescription();

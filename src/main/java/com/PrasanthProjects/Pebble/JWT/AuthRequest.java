@@ -1,11 +1,11 @@
-package com.PrasanthProjects.Pebble.JWT;
+package com.prasanthprojects.pebble.jwt;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AuthRequest {
+public class authrequest {
     private String username;
     private String password;
 }

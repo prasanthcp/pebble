@@ -1,11 +1,11 @@
-package com.PrasanthProjects.Pebble.Repository;
+package com.prasanthprojects.pebble.repository;
 
-import com.PrasanthProjects.Pebble.Service.Users;
+import com.prasanthprojects.pebble.service.users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UsersJpaRepository extends JpaRepository<Users,Integer> {
-    public Optional<Users> findByUsername(String username);
+public interface usersjparepository extends JpaRepository<users,Integer> {
+    public Optional<users> findByUsername(String username);
 }

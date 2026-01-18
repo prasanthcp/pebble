@@ -1,4 +1,4 @@
-package com.PrasanthProjects.Pebble.Service;
+package com.prasanthprojects.pebble.service;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity @Builder
 @Data @NoArgsConstructor @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Users {
+public class users {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
