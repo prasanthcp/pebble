@@ -4,9 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+//import lombok.AllArgsConstructor;
+//import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -15,10 +14,24 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@Component @AllArgsConstructor @NoArgsConstructor
+@Component
+//@AllArgsConstructor @NoArgsConstructor
 public class jwtfilter extends OncePerRequestFilter {
+    public jwtfilter() {
+    }
 
-    @Autowired
+    public jwtfilter(jwtutil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    public jwtutil getJwtUtil() {
+        return jwtUtil;
+    }
+
+    public void setJwtUtil(jwtutil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
     private jwtutil jwtUtil;
 
     @Override

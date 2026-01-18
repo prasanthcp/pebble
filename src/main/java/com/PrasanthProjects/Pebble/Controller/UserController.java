@@ -16,6 +16,9 @@ public class usercontroller {
         this.usersJpaRepository = usersJpaRepository;
     }
 
+    public usercontroller() {
+    }
+
     public users getAuthenticatedUser() throws Exception {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return usersJpaRepository.findByUsername(username)

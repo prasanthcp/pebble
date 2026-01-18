@@ -2,7 +2,7 @@ package com.prasanthprojects.pebble.jwt;
 
 import com.prasanthprojects.pebble.repository.usersjparepository;
 import com.prasanthprojects.pebble.service.users;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@RestController @RequiredArgsConstructor
+@RestController
+//@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class authcontroller {
 
-    @Autowired private final authservice authService;
-    @Autowired private final usersjparepository usersJpaRepository;
+    private authservice authService;
+    private usersjparepository usersJpaRepository;
+
+    public authcontroller() {
+    }
+
+    public authcontroller(authservice authService, usersjparepository usersJpaRepository) {
+        this.authService = authService;
+        this.usersJpaRepository = usersJpaRepository;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody com.prasanthprojects.pebble.jwt.authrequest request) {

@@ -1,15 +1,16 @@
 package com.prasanthprojects.pebble.jwt;
 
 import com.prasanthprojects.pebble.repository.usersjparepository;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class authservice {
 
-    private final usersjparepository usersJpaRepository;
-    private final jwtutil jwtUtil;
+    private usersjparepository usersJpaRepository;
+    private  jwtutil jwtUtil;
+
 
     public String authenticate(String username, String password) {
 
@@ -27,4 +28,29 @@ public class authservice {
 
         return token;
     }
+
+    public authservice(usersjparepository usersJpaRepository, jwtutil jwtUtil) {
+        this.usersJpaRepository = usersJpaRepository;
+        this.jwtUtil = jwtUtil;
+    }
+
+    public authservice() {
+    }
+
+    public usersjparepository getUsersJpaRepository() {
+        return usersJpaRepository;
+    }
+
+    public void setUsersJpaRepository(usersjparepository usersJpaRepository) {
+        this.usersJpaRepository = usersJpaRepository;
+    }
+
+    public jwtutil getJwtUtil() {
+        return jwtUtil;
+    }
+
+    public void setJwtUtil(jwtutil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
 }

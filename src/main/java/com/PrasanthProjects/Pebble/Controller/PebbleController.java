@@ -5,21 +5,31 @@ import com.prasanthprojects.pebble.repository.usersjparepository;
 import com.prasanthprojects.pebble.service.pebble;
 import com.prasanthprojects.pebble.service.project;
 import com.prasanthprojects.pebble.service.users;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @RestController @RequestMapping("pebble")
 public class pebblecontroller {
 
-    private final projectjparepository projectJpaRepository;
-    private final usersjparepository userJpaRepository;
-    private final pebblejparepository pebbleJpaRepository;
-    private final usercontroller userController;
+    private projectjparepository projectJpaRepository;
+    private usersjparepository userJpaRepository;
+    private pebblejparepository pebbleJpaRepository;
+    private usercontroller userController;
+
+    public pebblecontroller(projectjparepository projectJpaRepository, usersjparepository userJpaRepository, pebblejparepository pebbleJpaRepository, usercontroller userController) {
+        this.projectJpaRepository = projectJpaRepository;
+        this.userJpaRepository = userJpaRepository;
+        this.pebbleJpaRepository = pebbleJpaRepository;
+        this.userController = userController;
+    }
+
+    public pebblecontroller() {
+    }
 
     @GetMapping("getAll/{project_id}")
     public ResponseEntity<ArrayList<pebble>> goTopebbleDashboard(@PathVariable int project_id) throws Exception {

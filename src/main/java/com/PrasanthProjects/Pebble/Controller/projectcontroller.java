@@ -5,7 +5,7 @@ import com.prasanthprojects.pebble.repository.usersjparepository;
 import com.prasanthprojects.pebble.repository.usersjparepository;
 import com.prasanthprojects.pebble.service.project;
 import com.prasanthprojects.pebble.service.users;
-import lombok.RequiredArgsConstructor;
+//import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("project")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class projectcontroller {
 
-    private final projectjparepository projectJpaRepository;
-    private final usersjparepository userJpaRepository;
-    private final pebblejparepository pebbleJpaRepository;
+    private projectjparepository projectJpaRepository;
+    private usersjparepository userJpaRepository;
+    private pebblejparepository pebbleJpaRepository;
+
+    public projectcontroller() {
+    }
+
+    public projectcontroller(projectjparepository projectJpaRepository, usersjparepository userJpaRepository, pebblejparepository pebbleJpaRepository) {
+        this.projectJpaRepository = projectJpaRepository;
+        this.userJpaRepository = userJpaRepository;
+        this.pebbleJpaRepository = pebbleJpaRepository;
+    }
 
     @GetMapping("/get/{project_id}")
     public ResponseEntity<project> getProject(@PathVariable int project_id) {

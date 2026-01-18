@@ -15,6 +15,9 @@ public class jwtutil {
     private static final String SECRET_KEY = "pramanampramanampramanampramanam";
     private static final long EXPIRATION_TIME = 3600000; // 1 hour
 
+    public jwtutil() {
+    }
+
     private final static Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
     public static String generateJWTToken(String username) {
