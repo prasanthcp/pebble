@@ -1,7 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import moment from "moment";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../security/Authcontext";
 import { retrievePebbleApi, updatePebbleApi, createPebbleApi } from "../../../services/PebbleService";
 import { useEffect, useState } from "react";
 
@@ -9,7 +8,6 @@ export default function Pebble() {
   const { pebbleId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const userId = useAuth().userId;
   const [pebble, setPebble] = useState(null);
   const topics = location.state?.topics || [];
   const projectId = location.state?.projectId;
@@ -47,7 +45,6 @@ export default function Pebble() {
 
   async function handleSubmit(values) {
     try {
-      const response =
         pebbleId === "-1"
           ? await createPebbleApi(values, projectId)
           : await updatePebbleApi(values, pebbleId);

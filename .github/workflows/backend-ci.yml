@@ -40,5 +40,15 @@ jobs:
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            pkill -f pebble || true
-            nohup java -jar /home/ec2-user/app/*.jar > app.log 2>&1 &
+            echo "Stopping old app..."
+            pkill -f 'java -jar' || true
+
+            echo "Starting app..."
+            cd /home/ec2-user/app
+            nohup java -jar *.jar \
+              --spring.profiles.active=prod \
+              > app.log 2>&1 &
+
+            sleep 5
+            ps -ef | grep java
+

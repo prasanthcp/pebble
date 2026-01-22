@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <PebbleApp/>
-      {/* <Footer className="app-footer" /> */}
+      {<Footer className="app-footer" />}
     </div>
   );
 }

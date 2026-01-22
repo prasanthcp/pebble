@@ -10,7 +10,6 @@ export default function Login() {
     const navigate = useNavigate();
     const authContext = useAuth();
     const isAuthenticated = authContext.isAuthenticated;
-    const userId = authContext.userId;
 
     return (
     <> 

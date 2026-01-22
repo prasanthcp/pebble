@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 
 export default function PebbleDashboard() {
 
-    const today = new Date();
     const {projectId} = useParams();
     const location = useLocation();
     const navigate = useNavigate();

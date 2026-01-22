@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom'
-import {useContext} from 'react';
 import {useAuth} from '../security/Authcontext';
 function HeaderComponent({ className }) {
   const authContext = useAuth();

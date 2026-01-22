@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+//import { useParams } from "react-router-dom"; 
 import dayjs from "dayjs";
 import { retrieveProjectsApi } from "../../../services/ProjectService";
 import { useAuth } from "../security/Authcontext";
 
 export default function ProjectDashboard() {
-  const { projectId } = useParams();
+  //const { projectId } = useParams();
   const navigate = useNavigate();
   const { userId, username } = useAuth();
   const [projects, setProjects] = useState([]);
