@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import axios from 'axios';
+import API_BASE_URL from "../../../config";
+
 
 // Create axios client with baseURL
 const apiClient = axios.create(
     { 
-        baseURL: "http://localhost:8080" //, auth: { username: "Prasanth", password: "Welcome1" }
+        baseURL: API_BASE_URL //"http://localhost:8080" //, auth: { username: "Prasanth", password: "Welcome1" }
     }
 );
 

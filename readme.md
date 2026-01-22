@@ -205,3 +205,75 @@ Debug Notes:
 
 
 2026-01-14T10:28:53.321+05:30  WARN 11185 --- [Pebble] [nio-5001-exec-8] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.time.LocalDateTime` from String "2026-01-14": Failed to deserialize `java.time.LocalDateTime` (with format 'ParseCaseSensitive(false)(Value(Year,4,10,EXCEEDS_PAD)'-'Value(MonthOfYear,2)'-'Value(DayOfMonth,2))'T'(Value(HourOfDay,2)':'Value(MinuteOfHour,2)[':'Value(SecondOfMinute,2)[Fraction(NanoOfSecond,0,9,DecimalPoint)]])'): (java.time.format.DateTimeParseException) Text '2026-01-14' could not be parsed at index 10]
+
+Connect to OCI VM:
+ssh -i ~/.ssh/pebble-oci.pem opc@144.24.154.121
+
+Install Java:
+sudo dnf install -y java-17-openjdk --setopt=timeout=300
+
+Check internet Connection: ->
+ping -c 3 google.com
+
+Clean DNF Cache:
+sudo dnf clean all
+sudo dnf makecache
+
+Export env vars on VM:
+nano ~/.bashrc
+export DB_USER=ADMIN
+export DB_PASSWORD=Pebble*Password123
+export DB_URL=jdbc:oracle:thin:@pebbledb*_low
+export JWT_SECRET=pramanam*pramanam*pramanampramanam
+source ~/.bashrc
+
+Run JAR File: -> java -jar pebble-backend.jar
+Test: http://144.24.154.121:8080/actuator/health
+
+OCI CheatSheet;
+---------------
+
+**1. What interviewers expect from cloud experience**
+Interviewers mainly want to know if you understand how a backend application runs in the cloud. They don’t expect deep DevOps knowledge. You should be able to explain how you deploy a Spring Boot app, expose it to the internet, secure it, and manage configuration.
+
+---
+
+**2. Compute (VM basics)**
+Cloud apps usually run on virtual machines. In AWS this is EC2; in Oracle Cloud it’s a Compute Instance. You choose a Linux OS, attach an SSH key, connect via port 22, and run your Java app using `java -jar`. This is the simplest and most acceptable deployment model for interviews.
+
+---
+
+**3. Networking (most important concept)**
+Every cloud runs inside a private network (VPC in AWS, VCN in OCI). To access your app from the internet, the VM needs a public IP and firewall rules. You must allow ports like 22 (SSH), 80/443 (HTTP/HTTPS), or 8080 (Spring Boot). Most “site not reachable” issues come from missed firewall rules.
+
+---
+
+**4. Security & configuration**
+Never hardcode secrets in code. Use environment variables for DB credentials, tokens, and passwords. Spring Boot supports this naturally using `${VAR_NAME}`. SSH key-based login is preferred over passwords. Open only required ports to keep the VM secure.
+
+---
+
+**5. Build & deployment flow**
+The standard flow is: write code → `mvn clean package` → generate JAR → copy to VM → run JAR. This shows you understand real-world deployment. You don’t need Docker or Kubernetes unless explicitly required.
+
+---
+
+**6. Storage & databases**
+Applications usually connect to a managed database instead of running DBs on the VM. AWS has RDS; Oracle Cloud has Autonomous DB. Using a managed DB shows good design because backups, scaling, and patching are handled by the cloud provider.
+
+---
+
+**7. AWS vs Oracle Cloud (how to explain)**
+AWS is the industry standard; knowing service names and concepts is enough. Oracle Cloud Free Tier is great for hands-on demos and portfolios. Both clouds share the same core ideas: VM, network, firewall, storage, and IAM.
+
+---
+
+**8. Pebble mapping (what you actually built)**
+Pebble frontend runs on GitHub Pages. The backend runs on an OCI VM with Spring Boot. The backend connects to Oracle Autonomous DB using environment variables. This clean separation is exactly what interviewers like to see.
+
+---
+
+**Memory trick:**
+Remember just **5 words** → **Compute, Network, Security, Storage, Deploy**
+Every cloud interview question fits into one of these.
+

@@ -37,7 +37,7 @@ public class PebbleApplication {
                         .allowedMethods("*")
                         .allowedOrigins(
                                 "http://localhost:3000",
-                                "https://pebbleui.netlify.app"
+                                "http://pebble-frontend8712.s3-website-ap-southeast-2.amazonaws.com"
                         )
                         .allowedHeaders("Authorization", "Content-Type");
             }
