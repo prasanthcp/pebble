@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/pebble/static/css/main.9ccfb82a.css",
-    "main.js": "/pebble/static/js/main.905438bb.js",
-    "static/js/453.37b40076.chunk.js": "/pebble/static/js/453.37b40076.chunk.js",
-    "index.html": "/pebble/index.html",
-    "main.9ccfb82a.css.map": "/pebble/static/css/main.9ccfb82a.css.map",
-    "main.905438bb.js.map": "/pebble/static/js/main.905438bb.js.map",
-    "453.37b40076.chunk.js.map": "/pebble/static/js/453.37b40076.chunk.js.map"
+    "main.css": "./static/css/main.9ccfb82a.css",
+    "main.js": "./static/js/main.59867315.js",
+    "static/js/453.37b40076.chunk.js": "./static/js/453.37b40076.chunk.js",
+    "index.html": "./index.html",
+    "main.9ccfb82a.css.map": "./static/css/main.9ccfb82a.css.map",
+    "main.59867315.js.map": "./static/js/main.59867315.js.map",
+    "453.37b40076.chunk.js.map": "./static/js/453.37b40076.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9ccfb82a.css",
-    "static/js/main.905438bb.js"
+    "static/js/main.59867315.js"
   ]
 }
