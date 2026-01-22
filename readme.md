@@ -230,6 +230,9 @@ source ~/.bashrc
 Run JAR File: -> java -jar pebble-backend.jar
 Test: http://144.24.154.121:8080/actuator/health
 
+
+
+
 OCI CheatSheet;
 ---------------
 
